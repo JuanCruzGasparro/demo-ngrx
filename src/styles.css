@@ -13,11 +13,8 @@ body {
 .container {
   margin-right: auto;
   margin-left: auto;
-  padding-right: 15px;
-  padding-left: 15px;
   max-width: 940px;
   width: 100%;
-  display: flex;
 }
 
 .d-flex {
