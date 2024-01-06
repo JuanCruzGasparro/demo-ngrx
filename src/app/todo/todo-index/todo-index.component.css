@@ -1,0 +1,15 @@
+.todo-index-page {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todo-index-page__title {
+  text-align: center;
+}
+
+.todo-index-page__todo-panel {
+  width: 100%;
+  max-width: 400px;
+}

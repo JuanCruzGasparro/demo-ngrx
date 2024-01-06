@@ -1,0 +1,15 @@
+<div class="todo-index-page container">
+  <h1 class="todo-index-page__title">To Do</h1>
+  <div class="todo-index-page__todo-panel">
+    <mat-selection-list>
+      @for (todo of todoEntities$ |async; track todo.id) {
+      <mat-list-option
+        [selected]="todo.isCompleted"
+        (selectedChange)="toggleTodoCompleteHandler(todo.id)"
+      >
+        {{ todo.description }}
+      </mat-list-option>
+      }
+    </mat-selection-list>
+  </div>
+</div>
