@@ -4,16 +4,11 @@
   flex-direction: column;
 }
 
-.app-layout {
-  display: flex;
-  flex-direction: column;
-}
-
-.app-layout__header {
+.header {
   order: 1;
 }
 
-.app-layout__content {
+.content {
   order: 2;
   flex: 1;
 }
