@@ -1,0 +1,6 @@
+@use "@angular/material" as mat;
+
+@mixin apply-theme($theme) {
+  @include mat.core-color($theme);
+  @include mat.all-component-themes($theme);
+}

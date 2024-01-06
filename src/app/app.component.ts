@@ -16,6 +16,6 @@ export class AppComponent {
   title = 'ngrx-demo';
 
   constructor(private _themeService: ThemeService) {
-    this._themeService.setTheme(Theme.Dark);
+    // this._themeService.setTheme(Theme.Light);
   }
 }

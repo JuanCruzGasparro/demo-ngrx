@@ -2,13 +2,38 @@
 
 @include mat.core();
 
-$primary-light: mat.define-palette(mat.$deep-purple-palette);
-$accent-light: mat.define-palette(mat.$amber-palette);
-$theme-light: mat.define-light-theme($primary-light, $accent-light);
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$deep-purple-palette),
+      accent: mat.define-palette(mat.$amber-palette),
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
 
-$primary-dark: mat.define-palette(mat.$deep-purple-palette);
-$accent-dark: mat.define-palette(mat.$amber-palette);
-$theme-dark: mat.define-dark-theme($primary-light, $accent-light);
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$deep-purple-palette),
+      accent: mat.define-palette(mat.$amber-palette),
+    ),
+  )
+);
 
-@include mat.core-theme($theme-light);
-@include mat.all-component-themes($theme-light);
+// @include mat.core-color($light-theme);
+// @include mat.all-component-themes($light-theme);
+
+// .dark-mode {
+@include mat.core-color($dark-theme);
+@include mat.all-component-themes($dark-theme);
+// }
+// @media (prefers-color-scheme: light) {
+
+// }
+
+// @media (prefers-color-scheme: dark) {
+//   @include mat.core-color($dark-theme);
+//   @include mat.all-component-themes($dark-theme);
+// }
