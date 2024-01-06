@@ -3,7 +3,7 @@
     <h1 class="todo-index-page__title">Todo list</h1>
     <div class="todo-index-page__list">
       <mat-selection-list>
-        @for (todo of todoEntities$ |async; track todo.id) {
+        @for (todo of todoEntities$ | async; track todo.id) {
         <mat-list-option
           [selected]="todo.isCompleted"
           (selectedChange)="toggleTodoCompleteHandler(todo.id)"
