@@ -1,0 +1,29 @@
+<div class="container todo-index-page">
+  <div class="todo-index-page__todo-panel">
+    <h1 class="todo-index-page__title">Todo list</h1>
+    <div class="todo-index-page__list">
+      <mat-selection-list>
+        @for (todo of todoEntities$ | async; track todo.id) {
+        <mat-list-option
+          [selected]="todo.isCompleted"
+          (selectedChange)="toggleTodoCompleteHandler(todo.id)"
+        >
+          {{ todo.description }}
+        </mat-list-option>
+        }
+      </mat-selection-list>
+    </div>
+    <div class="todo-index-page__input">
+      <mat-form-field appearance="outline">
+        <mat-label>Agregar una tarea</mat-label>
+        <input
+          matInput
+          placeholder="Ej: Comprar servilletas"
+          [(ngModel)]="todoDescription"
+          (keyup.enter)="addTodoHandler()"
+        />
+        <mat-icon matSuffix>send</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
