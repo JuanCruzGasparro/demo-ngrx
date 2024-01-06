@@ -1,0 +1,16 @@
+name: PR to develop
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+
+jobs:
+  pr_to_develop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Merge pull request to develop
+        run: git merge --no-ff ${{ github.event.pull_request.head.ref }} -m "Merge PR #${{ github.event.pull_request.number }} into develop" && git push origin develop
