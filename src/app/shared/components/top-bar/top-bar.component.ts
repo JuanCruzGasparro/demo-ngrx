@@ -6,6 +6,6 @@ import { MaterialModule } from '../../modules/material.module';
   standalone: true,
   imports: [MaterialModule],
   templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.css',
+  styleUrl: './top-bar.component.scss',
 })
 export class TopBarComponent {}

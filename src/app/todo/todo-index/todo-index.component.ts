@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   standalone: true,
   imports: [CommonModule, MaterialModule, FormsModule],
   templateUrl: './todo-index.component.html',
-  styleUrl: './todo-index.component.css',
+  styleUrl: './todo-index.component.scss',
 })
 export class TodoIndexComponent implements OnInit {
   public todoDescription = '';
