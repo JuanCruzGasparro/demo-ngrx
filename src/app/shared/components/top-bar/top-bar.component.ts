@@ -15,21 +15,13 @@ export class TopBarComponent implements OnInit {
 
   constructor(private _themeService: ThemeService) {}
 
-  get currentTheme(): string {
-    return this._themeService.currentTheme;
-  }
-
-  get isLightTheme(): boolean {
-    return this.currentTheme === Theme.Light;
-  }
-
-  get isDarkTheme(): boolean {
-    return this.currentTheme === Theme.Dark;
+  get isDarkMode(): boolean {
+    return this._themeService.isDarkMode;
   }
 
   ngOnInit(): void {}
 
   toggleThemeClickHandler(): void {
-    this._themeService.toggleTheme();
+    this._themeService.toggleDarkMode();
   }
 }

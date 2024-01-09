@@ -15,7 +15,9 @@ import { Theme } from '@shared/enums/theme.enum';
 export class AppComponent {
   title = 'ngrx-demo';
 
-  constructor(private _themeService: ThemeService) {
-    // this._themeService.setTheme(Theme.Light);
+  constructor(private _themeService: ThemeService) {}
+
+  getThemeClass(): string {
+    return this._themeService.isDarkMode ? 'dark-theme' : 'light-theme';
   }
 }

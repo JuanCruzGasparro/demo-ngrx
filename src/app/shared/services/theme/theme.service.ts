@@ -7,37 +7,22 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ThemeService {
-  public currentTheme: Theme = this._getCurrentTheme();
+  private _isDarkMode$ = new BehaviorSubject<boolean>(false);
 
-  private _DEFAULT_THEME = Theme.Light;
+  private _THEME_STORE_KEY = 'isDarkMode';
 
-  constructor(private _overlayContainer: OverlayContainer) {
-    this._setCurrentTheme(this._getCurrentTheme());
+  constructor() {}
+
+  get isDarkMode(): boolean {
+    return JSON.parse(localStorage.getItem(this._THEME_STORE_KEY) || 'false');
   }
 
-  toggleTheme(): void {
-    const nextTheme =
-      this.currentTheme === Theme.Light ? Theme.Dark : Theme.Light;
-    this._setCurrentTheme(nextTheme);
-    localStorage.setItem('theme', nextTheme);
+  set isDarkMode(value: boolean) {
+    localStorage.setItem(this._THEME_STORE_KEY, JSON.stringify(value));
   }
 
-  private _getCurrentTheme(): Theme {
-    return (localStorage.getItem('theme') as Theme) || this._DEFAULT_THEME;
-  }
-
-  private _setCurrentTheme(theme: Theme): void {
-    this.currentTheme = theme;
-    // document.body.classList.remove('light-theme', 'dark-theme');
-    // document.body.classList.add(theme);
-    const overlayContainerClasses =
-      this._overlayContainer.getContainerElement().classList;
-    const themeClassesToRemove = Array.from(overlayContainerClasses).filter(
-      (item: string) => item.includes('-theme')
-    );
-    if (themeClassesToRemove.length) {
-      overlayContainerClasses.remove(...themeClassesToRemove);
-    }
-    overlayContainerClasses.add(`${theme}-theme`);
+  toggleDarkMode(): void {
+    this._isDarkMode$.next(!this.isDarkMode);
+    this.isDarkMode = !this.isDarkMode;
   }
 }
