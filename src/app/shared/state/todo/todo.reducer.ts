@@ -1,14 +1,16 @@
 import { createReducer, on } from '@ngrx/store';
 import { ITodoState } from './todo.state';
-import { AddTodo, ToggleCompleteTodo } from './todo.actions';
-import { Todo } from '@shared/models/todo.model';
+import {
+  AddTodo,
+  FetchTodosError,
+  FetchTodosSuccess,
+  ToggleCompleteTodo,
+} from './todo.actions';
 import { addTodoHelper, toogleTodoCompleteHelper } from './todo.utils';
 
-const initialTodo = new Todo({ description: 'Limpiar ventanas' });
-console.log(initialTodo);
-
 export const initialState: ITodoState = {
-  entities: [initialTodo],
+  entities: [],
+  error: null,
 };
 
 export const todoFeatureKey = 'todo';
@@ -22,5 +24,13 @@ export const todoReducer = createReducer(
   on(ToggleCompleteTodo, (state, { id }) => ({
     ...state,
     entities: [...toogleTodoCompleteHelper(id, state.entities)],
+  })),
+  on(FetchTodosSuccess, (state, { entities }) => ({
+    ...state,
+    entities,
+  })),
+  on(FetchTodosError, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );

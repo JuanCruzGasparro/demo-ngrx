@@ -4,7 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Todo } from '@shared/models/todo.model';
 import { MaterialModule } from '@shared/modules/material.module';
-import { AddTodo, ToggleCompleteTodo } from '@shared/state/todo/todo.actions';
+import {
+  AddTodo,
+  FetchTodos,
+  ToggleCompleteTodo,
+} from '@shared/state/todo/todo.actions';
 import { selectTodoEntities } from '@shared/state/todo/todo.selectors';
 import { ITodoState } from '@shared/state/todo/todo.state';
 import { Observable } from 'rxjs';
@@ -25,6 +29,7 @@ export class TodoIndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.todoEntities$ = this._store.select(selectTodoEntities);
+    this._fetchTodos();
   }
 
   addTodoHandler(): void {
@@ -38,5 +43,9 @@ export class TodoIndexComponent implements OnInit {
   toggleTodoCompleteHandler(id?: string): void {
     if (!id) return;
     this._store.dispatch(ToggleCompleteTodo({ id }));
+  }
+
+  private _fetchTodos(): void {
+    this._store.dispatch(FetchTodos());
   }
 }
