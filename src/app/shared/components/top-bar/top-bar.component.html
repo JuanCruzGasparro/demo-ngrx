@@ -6,8 +6,13 @@
       mat-icon-button
       class="example-icon favorite-icon"
       aria-label="Example icon-button with heart icon"
+      (click)="toggleThemeClickHandler()"
     >
-      <mat-icon>favorite</mat-icon>
+      @if (isDarkMode) {
+      <mat-icon>dark_mode</mat-icon>
+      } @else {
+      <mat-icon>light_mode</mat-icon>
+      }
     </button>
   </div>
 </mat-toolbar>
