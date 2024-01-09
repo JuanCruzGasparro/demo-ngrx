@@ -4,8 +4,11 @@ import { AddTodo, ToggleCompleteTodo } from './todo.actions';
 import { Todo } from '@shared/models/todo.model';
 import { addTodoHelper, toogleTodoCompleteHelper } from './todo.utils';
 
+const initialTodo = new Todo({ description: 'Limpiar ventanas' });
+console.log(initialTodo);
+
 export const initialState: ITodoState = {
-  entities: [new Todo({ description: 'Limpiar ventanas' })],
+  entities: [initialTodo],
 };
 
 export const todoFeatureKey = 'todo';
