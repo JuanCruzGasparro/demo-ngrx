@@ -10,6 +10,7 @@ import { addTodoHelper, toogleTodoCompleteHelper } from './todo.utils';
 
 export const initialState: ITodoState = {
   entities: [],
+  isLoading: false,
   error: null,
 };
 
@@ -17,14 +18,6 @@ export const todoFeatureKey = 'todo';
 
 export const todoReducer = createReducer(
   initialState,
-  on(AddTodo, (state, { todo }) => ({
-    ...state,
-    entities: [...addTodoHelper(todo, state.entities)],
-  })),
-  on(ToggleCompleteTodo, (state, { id }) => ({
-    ...state,
-    entities: [...toogleTodoCompleteHelper(id, state.entities)],
-  })),
   on(FetchTodosSuccess, (state, { entities }) => ({
     ...state,
     entities,
@@ -32,5 +25,13 @@ export const todoReducer = createReducer(
   on(FetchTodosError, (state, { error }) => ({
     ...state,
     error,
+  })),
+  on(AddTodo, (state, { todo }) => ({
+    ...state,
+    entities: [...addTodoHelper(todo, state.entities)],
+  })),
+  on(ToggleCompleteTodo, (state, { id }) => ({
+    ...state,
+    entities: [...toogleTodoCompleteHelper(id, state.entities)],
   }))
 );
