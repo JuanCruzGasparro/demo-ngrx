@@ -7,7 +7,7 @@ import { MaterialModule } from '@shared/modules/material.module';
 import {
   AddTodo,
   FetchTodos,
-  ToggleCompleteTodo,
+  UpdateTodo,
 } from '@shared/state/todo/todo.actions';
 import { selectTodoEntities } from '@shared/state/todo/todo.selectors';
 import { ITodoState } from '@shared/state/todo/todo.state';
@@ -40,9 +40,9 @@ export class TodoIndexComponent implements OnInit {
     this.todoDescription = '';
   }
 
-  toggleTodoCompleteHandler(id?: string): void {
-    if (!id) return;
-    this._store.dispatch(ToggleCompleteTodo({ id }));
+  toggleTodoCompleteHandler(isCompleted: boolean, todo: Todo): void {
+    if (!todo) return;
+    this._store.dispatch(UpdateTodo({ todo: { ...todo, isCompleted } }));
   }
 
   private _fetchTodos(): void {

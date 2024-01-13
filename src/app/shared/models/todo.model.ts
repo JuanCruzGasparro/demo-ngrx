@@ -1,5 +1,4 @@
 import { Timestamps } from '@shared/utils/timestamps';
-import { getUUID } from '@shared/utils/uuid.utils';
 
 export class Todo extends Timestamps {
   id?: string;
@@ -8,7 +7,7 @@ export class Todo extends Timestamps {
 
   constructor({ id, description, isCompleted = false }: Todo) {
     super();
-    this.id = id ?? getUUID();
+    this.id = id;
     this.description = description;
     this.isCompleted = isCompleted;
   }

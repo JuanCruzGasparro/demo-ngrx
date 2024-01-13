@@ -17,10 +17,13 @@ export class TodoService {
 
   public getAll(): Observable<Todo[]> {
     return this._http.get<Todo[]>(this._url);
-    // return of([
-    //   new Todo({ description: 'Limpiar ventanas' }),
-    //   new Todo({ description: 'Comprar servilletas' }),
-    //   new Todo({ description: 'Lavar auto' }),
-    // ]);
+  }
+
+  public create(todo: Todo): Observable<any> {
+    return this._http.post<any>(this._url, todo);
+  }
+
+  public update(todo: Todo): Observable<any> {
+    return this._http.put<any>(`${this._url}/${todo.id}`, todo);
   }
 }

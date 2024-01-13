@@ -6,10 +6,14 @@
         @for (todo of todoEntities$ | async; track todo.id) {
         <mat-list-option
           [selected]="todo.isCompleted"
-          (selectedChange)="toggleTodoCompleteHandler(todo.id)"
+          (selectedChange)="toggleTodoCompleteHandler($event, todo)"
         >
           {{ todo.description }}
         </mat-list-option>
+        } @empty {
+        <mat-list-item [disabled]="true" class="text-center"
+          >Agrega alguna tarea</mat-list-item
+        >
         }
       </mat-selection-list>
     </div>

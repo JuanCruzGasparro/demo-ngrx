@@ -7,18 +7,29 @@ export enum TodoActionTypes {
   FetchTodosError = '[TODO] Fetch Todos Error',
 
   AddTodo = '[TODO] Add Todo',
+  AddTodoSuccess = '[TODO] Add Todo Success',
+  AddTodoError = '[TODO] Add Todo Error',
+
+  UpdateTodo = '[TODO] Update Todo',
+  UpdateTodoSuccess = '[TODO] Update Todo Success',
+  UpdateTodoError = '[TODO] Update Todo Error',
+
   RemoveTodo = '[TODO] Remove Todo',
-  ToggleCompleteTodo = '[TODO] Mark As Complete',
+  RemoveTodoSuccess = '[TODO] Remove Todo Success',
+  RemoveTodoError = '[TODO] Remove Todo Error',
 }
 
 export const AddTodo = createAction(
   TodoActionTypes.AddTodo,
   props<{ todo: Todo }>()
 );
-
-export const ToggleCompleteTodo = createAction(
-  TodoActionTypes.ToggleCompleteTodo,
-  props<{ id: string }>()
+export const AddTodoSuccess = createAction(
+  TodoActionTypes.AddTodoSuccess,
+  props<{ todo: Todo }>()
+);
+export const AddTodoError = createAction(
+  TodoActionTypes.AddTodoError,
+  props<{ error: any }>()
 );
 
 export const FetchTodos = createAction(TodoActionTypes.FetchTodos);
@@ -28,5 +39,18 @@ export const FetchTodosSuccess = createAction(
 );
 export const FetchTodosError = createAction(
   TodoActionTypes.FetchTodosError,
+  props<{ error: any }>()
+);
+
+export const UpdateTodo = createAction(
+  TodoActionTypes.UpdateTodo,
+  props<{ todo: Todo }>()
+);
+export const UpdateTodoSuccess = createAction(
+  TodoActionTypes.UpdateTodoSuccess,
+  props<{ todo: Todo }>()
+);
+export const UpdateTodoError = createAction(
+  TodoActionTypes.UpdateTodoError,
   props<{ error: any }>()
 );

@@ -4,9 +4,9 @@ import {
   AddTodo,
   FetchTodosError,
   FetchTodosSuccess,
-  ToggleCompleteTodo,
+  UpdateTodo,
 } from './todo.actions';
-import { addTodoHelper, toogleTodoCompleteHelper } from './todo.utils';
+import { addTodoHelper, updateTodoHelper } from './todo.utils';
 
 export const initialState: ITodoState = {
   entities: [],
@@ -30,8 +30,8 @@ export const todoReducer = createReducer(
     ...state,
     entities: [...addTodoHelper(todo, state.entities)],
   })),
-  on(ToggleCompleteTodo, (state, { id }) => ({
+  on(UpdateTodo, (state, { todo }) => ({
     ...state,
-    entities: [...toogleTodoCompleteHelper(id, state.entities)],
+    entities: [...updateTodoHelper(todo, state.entities)],
   }))
 );

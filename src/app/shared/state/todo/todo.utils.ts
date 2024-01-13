@@ -5,14 +5,8 @@ export const addTodoHelper = (todo: Todo, list: Todo[]): Todo[] => [
   todo,
 ];
 
-export const toogleTodoCompleteHelper = (
-  targetId: string,
-  list: Todo[]
-): Todo[] => {
-  return list.map((entity) => {
-    console.log(entity);
-    return entity.id === targetId
-      ? { ...entity, isCompleted: !entity.isCompleted }
-      : entity;
-  });
+export const updateTodoHelper = (updatedItem: Todo, list: Todo[]): Todo[] => {
+  return [
+    ...list.map((todo) => (todo.id === updatedItem.id ? updatedItem : todo)),
+  ];
 };
