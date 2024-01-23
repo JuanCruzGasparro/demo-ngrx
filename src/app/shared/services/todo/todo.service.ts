@@ -3,6 +3,7 @@ import { Todo } from '@shared/models/todo.model';
 import { Observable, of } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import { HttpClient } from '@angular/common/http';
+import { TodoFilterParameter } from '@shared/models/todo-filter-parameter.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,12 @@ export class TodoService {
 
   public getAll(): Observable<Todo[]> {
     return this._http.get<Todo[]>(this._url);
+  }
+
+  public get(filter: TodoFilterParameter): Observable<Todo> {
+    const parameters = filter.toString();
+    console.log('TodoService get: parameter', parameters);
+    return this._http.get<Todo>(`${this._url}?${parameters}`);
   }
 
   public create(todo: Todo): Observable<any> {
