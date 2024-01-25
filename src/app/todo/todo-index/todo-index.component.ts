@@ -10,9 +10,9 @@ import {
   AddTodo,
   FetchTodos,
   UpdateTodo,
-} from '@shared/state/todo/todo.actions';
-import { selectTodoEntities } from '@shared/state/todo/todo.selectors';
-import { ITodoState } from '@shared/state/todo/todo.state';
+} from '@shared/old_state/todo/todo.actions';
+import { selectTodoEntities } from '@shared/old_state/todo/todo.selectors';
+import { ITodoState } from '@shared/old_state/todo/todo.state';
 import { Observable } from 'rxjs';
 
 @Component({

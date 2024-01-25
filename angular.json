@@ -20,10 +20,17 @@
             "outputPath": "dist/ngrx-demo",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles/index.scss"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles/index.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -77,10 +84,18 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles/index.scss"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles/index.scss"
+            ],
             "scripts": []
           }
         }
@@ -88,6 +103,9 @@
     }
   },
   "cli": {
-    "analytics": "63b97380-ffc5-4a6d-93a8-dfae79b00420"
+    "analytics": "63b97380-ffc5-4a6d-93a8-dfae79b00420",
+    "schematicCollections": [
+      "@ngrx/schematics"
+    ]
   }
 }
