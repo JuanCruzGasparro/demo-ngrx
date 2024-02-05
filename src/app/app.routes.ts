@@ -3,20 +3,18 @@ import { PageNotFoundComponent } from '@shared/components/page-not-found/page-no
 import { TodoIndexComponent } from './todo/todo-index/todo-index.component';
 import { provideState } from '@ngrx/store';
 import { todoFeatureKey, todoReducer } from '@shared/state/todo/todo.reducer';
+import { IndexComponent } from './index/index.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: IndexComponent,
+  },
   {
     path: 'todo',
     component: TodoIndexComponent,
     providers: [provideState({ name: todoFeatureKey, reducer: todoReducer })],
   },
-  {
-    path: '',
-    redirectTo: '/todo',
-    pathMatch: 'full',
-  },
-  {
-    path: '**',
-    component: PageNotFoundComponent,
-  },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent, data: { hideTopBar: true } },
 ];

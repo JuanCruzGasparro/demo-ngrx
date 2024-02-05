@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="isTopBarVisible$ | async">
   <div class="container d-flex align-items-center">
     <span>Demo NgRx</span>
     <span class="spacer"></span>

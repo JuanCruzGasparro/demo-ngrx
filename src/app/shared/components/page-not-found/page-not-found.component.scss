@@ -1,0 +1,14 @@
+.page-not-found {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .inner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
