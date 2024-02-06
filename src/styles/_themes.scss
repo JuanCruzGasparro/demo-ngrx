@@ -2,21 +2,20 @@
 
 @include mat.core();
 
+$color: (
+  primary: mat.define-palette(mat.$deep-purple-palette),
+  accent: mat.define-palette(mat.$amber-palette),
+);
+
 $dark-theme: mat.define-dark-theme(
   (
-    color: (
-      primary: mat.define-palette(mat.$deep-purple-palette),
-      accent: mat.define-palette(mat.$amber-palette),
-    ),
+    color: $color,
   )
 );
 
 $light-theme: mat.define-light-theme(
   (
-    color: (
-      primary: mat.define-palette(mat.$deep-purple-palette),
-      accent: mat.define-palette(mat.$amber-palette),
-    ),
+    color: $color,
   )
 );
 
