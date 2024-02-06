@@ -1,22 +1,25 @@
 import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from '@shared/components/page-not-found/page-not-found.component';
-import { TodoIndexComponent } from './todo/todo-index/todo-index.component';
+import { IndexComponent } from './index/index.component';
 import { provideEffects } from '@ngrx/effects';
 import { TodoEffects } from '@shared/store/todo/todo.effects';
+import { TodoIndexComponent } from './demos/todo/todo-index/todo-index.component';
 
 export const routes: Routes = [
   {
-    path: 'todo',
-    component: TodoIndexComponent,
-    providers: [provideEffects(TodoEffects)],
-  },
-  {
     path: '',
-    redirectTo: '/todo',
-    pathMatch: 'full',
+    component: IndexComponent,
   },
   {
-    path: '**',
-    component: PageNotFoundComponent,
+    path: 'demos',
+    children: [
+      {
+        path: 'todos',
+        component: TodoIndexComponent,
+        providers: [provideEffects(TodoEffects)],
+      },
+    ],
   },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent },
 ];
