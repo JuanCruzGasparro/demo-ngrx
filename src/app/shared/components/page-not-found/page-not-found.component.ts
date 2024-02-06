@@ -13,7 +13,5 @@ import { TopBarService } from '@shared/services/top-bar/top-bar.service';
 export class PageNotFoundComponent implements OnInit {
   constructor(private _topBarService: TopBarService) {}
 
-  ngOnInit(): void {
-    this._topBarService.isVisible = false;
-  }
+  ngOnInit(): void {}
 }
