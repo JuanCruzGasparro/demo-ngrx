@@ -1,14 +1,8 @@
 import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from '@shared/components/page-not-found/page-not-found.component';
 import { TodoIndexComponent } from './todo/todo-index/todo-index.component';
-import { provideState } from '@ngrx/store';
-import {
-  todoFeatureKey,
-  todoReducer,
-} from '@shared/old_state/todo/todo.reducer';
 import { provideEffects } from '@ngrx/effects';
-import { TodoEffects } from '@shared/old_state/todo/todo.effects';
-import { reducers } from '@shared/store';
+import { TodoEffects } from '@shared/store/todo/todo.effects';
 
 export const routes: Routes = [
   {

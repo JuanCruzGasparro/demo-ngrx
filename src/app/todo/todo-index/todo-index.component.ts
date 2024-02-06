@@ -21,7 +21,7 @@ import { selectTodos } from '@shared/store/todo/todo.selectors';
 export class TodoIndexComponent implements OnInit {
   public todoDescription = '';
 
-  public todosEntities$!: Observable<Todo[]>;
+  public todos$!: Observable<Todo[]>;
   public todosError$!: Observable<any>;
 
   constructor(private _store: Store<State>) {}
@@ -30,8 +30,7 @@ export class TodoIndexComponent implements OnInit {
     // const filter = new TodoFilterParameter();
     // filter.isCompleted = true;
     // this._todoService.get(filter)
-    this.todosEntities$ = this._store.select(selectTodos);
-    this.todosEntities$.subscribe((res) => console.log(res));
+    this.todos$ = this._store.select(selectTodos);
     this._fetchTodos();
   }
 
