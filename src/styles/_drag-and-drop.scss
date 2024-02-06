@@ -1,0 +1,47 @@
+$dad-vertical-spacer: 20px;
+$dad-gap: 10px;
+$dad-action-button-size: 24px;
+
+$dad-panel-border: 1px solid #dbdbdb;
+$dad-panel-border-radius: 5px;
+$dad-panel-background-color: #ffffff;
+
+.drag-and-drop {
+  margin-top: $dad-vertical-spacer;
+  margin-bottom: $dad-vertical-spacer;
+
+  // Container
+  &__container {
+    min-height: 400px;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: $dad-gap;
+  }
+
+  // Actions
+  &__actions {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: $dad-gap;
+  }
+
+  &__actions-list-item {
+    width: $dad-action-button-size;
+    height: $dad-action-button-size;
+  }
+
+  // Panel
+  &__panel {
+    height: 100%;
+    border-radius: $dad-panel-border-radius;
+    border: $dad-panel-border;
+    background-color: $dad-panel-background-color;
+  }
+}

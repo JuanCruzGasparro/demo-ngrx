@@ -4,6 +4,7 @@ import { IndexComponent } from './index/index.component';
 import { provideEffects } from '@ngrx/effects';
 import { TodoEffects } from '@shared/store/todo/todo.effects';
 import { TodoIndexComponent } from './demos/todo/todo-index/todo-index.component';
+import { DragAndDropIndexComponent } from './demos/drag-and-drop/drag-and-drop-index/drag-and-drop-index.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,11 @@ export const routes: Routes = [
         path: 'todos',
         component: TodoIndexComponent,
         providers: [provideEffects(TodoEffects)],
+      },
+      {
+        path: 'drag-and-drop',
+        component: DragAndDropIndexComponent,
+        providers: [],
       },
     ],
   },
