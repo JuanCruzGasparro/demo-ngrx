@@ -14,6 +14,7 @@ export const routes: Routes = [
   {
     path: 'todo',
     component: TodoIndexComponent,
+    providers: [provideEffects(TodoEffects)],
   },
   {
     path: '',

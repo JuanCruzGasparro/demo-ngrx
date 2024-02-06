@@ -1,7 +1,7 @@
 import { reducer, initialState } from './todo.reducer';
 
 describe('Todo Reducer', () => {
-  describe('an unknown action', () => {
+  describe('unknown action', () => {
     it('should return the previous state', () => {
       const action = {} as any;
 

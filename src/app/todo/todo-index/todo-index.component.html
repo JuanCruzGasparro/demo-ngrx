@@ -3,17 +3,17 @@
     <h1 class="todo-index-page__title">Todo list</h1>
     <div class="todo-index-page__list">
       <mat-selection-list>
-        @for (todo of todoEntities$ | async; track todo.id) {
+        @for (todoItem of todosEntities$ | async; track todoItem.id) {
         <mat-list-option
-          [selected]="todo.isCompleted"
-          (selectedChange)="toggleTodoCompleteHandler($event, todo)"
+          [selected]="todoItem.isCompleted"
+          (selectedChange)="toggleTodoCompleteHandler($event, todoItem)"
         >
-          {{ todo.description }}
+          {{ todoItem.description }}
         </mat-list-option>
         } @empty {
-        <mat-list-item [disabled]="true" class="text-center"
-          >Agrega alguna tarea</mat-list-item
-        >
+        <mat-list-item [disabled]="true" class="text-center">
+          Agrega alguna tarea
+        </mat-list-item>
         }
       </mat-selection-list>
     </div>

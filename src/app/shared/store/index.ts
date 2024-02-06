@@ -1,22 +1,16 @@
 import { isDevMode } from '@angular/core';
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer,
-} from '@ngrx/store';
+import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 
 import * as fromTodo from './todo/todo.reducer';
 
 export const stateFeatureKey = 'state';
 
 export interface State {
-  [fromTodo.todoFeatureKey]: fromTodo.State;
+  [fromTodo.todosFeatureKey]: fromTodo.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  [fromTodo.todoFeatureKey]: fromTodo.reducer,
+  [fromTodo.todosFeatureKey]: fromTodo.reducer,
 };
 
 export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
