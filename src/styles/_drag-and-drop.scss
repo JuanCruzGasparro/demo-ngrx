@@ -44,4 +44,16 @@ $dad-panel-background-color: #ffffff;
     border: $dad-panel-border;
     background-color: $dad-panel-background-color;
   }
+
+  &__panel-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__panel-list-item {
+    height: 25px;
+    display: flex;
+    align-items: center;
+    margin-left: $dad-vertical-spacer;
+  }
 }

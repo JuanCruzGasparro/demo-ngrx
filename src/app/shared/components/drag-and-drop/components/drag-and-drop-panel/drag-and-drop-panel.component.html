@@ -1,1 +1,16 @@
-<div class="drag-and-drop__panel">asd</div>
+<div class="drag-and-drop__panel">
+  <div
+    class="drag-and-drop__panel-list"
+    cdkDropList
+    #panel="cdkDropList"
+    [cdkDropListData]="items"
+    [cdkDropListConnectedTo]="[panelConnection]"
+    (cdkDropListDropped)="onDrop($event)"
+  >
+    @for (item of items; track $index) {
+    <div cdkDrag class="drag-and-drop__panel-list-item">
+      {{ item.description }}
+    </div>
+    }
+  </div>
+</div>
