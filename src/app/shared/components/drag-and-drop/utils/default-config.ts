@@ -1,14 +1,37 @@
-import { DragAndDropConfig } from '../types/drag-and-drop-config.interface';
+import {
+  DragAndDropConfig,
+  DragAndDropConfigBuilder,
+  DragAndDropStatus,
+} from '../types/drag-and-drop-config.interface';
 
 export const DRAG_AND_DROP_DEFAULT_CONFIG: DragAndDropConfig = {
   left: {
-    side: 'left',
     title: 'No asignados',
-    canReorder: true,
+    isSelectable: true,
+    hasStatus: false,
+    defaultStatus: DragAndDropStatus.Default,
+    canReorder: false,
+    hasActionButton: false,
+    actionButtonIcon: 'edit',
   },
   right: {
-    side: 'right',
     title: 'Asignados',
-    canReorder: true,
+    isSelectable: true,
+    hasStatus: false,
+    defaultStatus: DragAndDropStatus.Default,
+    canReorder: false,
+    hasActionButton: false,
+    actionButtonIcon: 'edit',
   },
 };
+
+export const buildDragAndDropConfig = (
+  overrides?: DragAndDropConfigBuilder
+): DragAndDropConfig => ({
+  left: overrides?.left
+    ? { ...DRAG_AND_DROP_DEFAULT_CONFIG, ...overrides.left }
+    : DRAG_AND_DROP_DEFAULT_CONFIG.left,
+  right: overrides?.right
+    ? { ...DRAG_AND_DROP_DEFAULT_CONFIG, ...overrides.right }
+    : DRAG_AND_DROP_DEFAULT_CONFIG.right,
+});

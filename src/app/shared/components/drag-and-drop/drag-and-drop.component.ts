@@ -21,7 +21,10 @@ import {
   DragAndDropConfig,
   DragAndDropPanelSide,
 } from './types/drag-and-drop-config.interface';
-import { DRAG_AND_DROP_DEFAULT_CONFIG } from './utils/default-config';
+import {
+  DRAG_AND_DROP_DEFAULT_CONFIG,
+  buildDragAndDropConfig,
+} from './utils/default-config';
 
 @Component({
   selector: 'app-drag-and-drop',
@@ -39,9 +42,7 @@ import { DRAG_AND_DROP_DEFAULT_CONFIG } from './utils/default-config';
 })
 export class DragAndDropComponent implements OnChanges {
   @Input() public id: string = 'drag-and-drop';
-  @Input() public config: DragAndDropConfig = {
-    ...DRAG_AND_DROP_DEFAULT_CONFIG,
-  };
+  @Input() public config: DragAndDropConfig = buildDragAndDropConfig();
   @Input() public unassignedItems: DragAndDropItem<number>[] = [];
   @Input() public assignedItems: DragAndDropItem<number>[] = [];
 
@@ -67,9 +68,13 @@ export class DragAndDropComponent implements OnChanges {
   }
   private _patchConfig({ left, right }: DragAndDropConfig): DragAndDropConfig {
     return {
-      left: { ...DRAG_AND_DROP_DEFAULT_CONFIG.left, ...left },
-      right: { ...DRAG_AND_DROP_DEFAULT_CONFIG.right, ...right },
-    };
+      left: left
+        ? { ...DRAG_AND_DROP_DEFAULT_CONFIG.left, ...left }
+        : DRAG_AND_DROP_DEFAULT_CONFIG.left,
+      right: right
+        ? { ...DRAG_AND_DROP_DEFAULT_CONFIG.right, ...right }
+        : DRAG_AND_DROP_DEFAULT_CONFIG.right,
+    } as DragAndDropConfig;
   }
 
   private _getPanelSide(

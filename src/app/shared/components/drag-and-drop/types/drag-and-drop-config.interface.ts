@@ -1,12 +1,27 @@
-export type DragAndDropConfig = {
+export type DragAndDropPanelSide = 'right' | 'left';
+
+export enum DragAndDropStatus {
+  Default = 'default',
+  Success = 'success',
+  Error = 'error',
+}
+
+export interface DragAndDropConfig {
   left: DragAndDropPanelConfig;
   right: DragAndDropPanelConfig;
-};
+}
 
-export type DragAndDropPanelConfig = {
-  side: DragAndDropPanelSide;
-  canReorder?: boolean;
+export interface DragAndDropConfigBuilder {
+  left?: DragAndDropPanelConfig;
+  right?: DragAndDropPanelConfig;
+}
+
+export interface DragAndDropPanelConfig {
   title?: string;
-};
-
-export type DragAndDropPanelSide = 'right' | 'left';
+  isSelectable?: boolean;
+  hasStatus?: boolean;
+  defaultStatus?: DragAndDropStatus;
+  canReorder?: boolean;
+  hasActionButton?: boolean;
+  actionButtonIcon?: string;
+}

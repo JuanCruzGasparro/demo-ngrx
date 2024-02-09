@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DragAndDropComponent } from '@shared/components/drag-and-drop/drag-and-drop.component';
-import { DragAndDropConfig } from '@shared/components/drag-and-drop/types/drag-and-drop-config.interface';
+import {
+  DragAndDropConfig,
+  DragAndDropStatus,
+} from '@shared/components/drag-and-drop/types/drag-and-drop-config.interface';
 import { DragAndDropItem } from '@shared/components/drag-and-drop/types/drag-and-drop.interface';
+import { buildDragAndDropConfig } from '@shared/components/drag-and-drop/utils/default-config';
 import { MaterialModule } from '@shared/modules/material.module';
 
 @Component({
@@ -13,15 +17,19 @@ import { MaterialModule } from '@shared/modules/material.module';
   styleUrl: './drag-and-drop-index.component.scss',
 })
 export class DragAndDropIndexComponent {
-  public dragAndDropConfig: DragAndDropConfig = {
-    left: {
-      side: 'left',
-    },
+  public dragAndDropConfig = buildDragAndDropConfig({
     right: {
-      title: 'Right',
-      side: 'right',
+      hasActionButton: true,
+      hasStatus: true,
     },
-  };
+  });
+  // public dragAndDropConfig: DragAndDropConfig = {
+  // right: {
+  //   side: 'right',
+  //   hasActionButton: true,
+  //   hasStatus: true,
+  // },
+  // };
   public assignedItems: DragAndDropItem<number>[] = [];
   public unassignedItems: DragAndDropItem<number>[] = [
     { id: 1, description: 'Casa' },

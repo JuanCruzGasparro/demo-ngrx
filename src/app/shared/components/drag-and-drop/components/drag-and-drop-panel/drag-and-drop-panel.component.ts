@@ -5,17 +5,12 @@ import {
   EventEmitter,
   ViewChild,
 } from '@angular/core';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { DragAndDropItem } from '../../types/drag-and-drop.interface';
 import {
   DragAndDropPanelConfig,
   DragAndDropPanelSide,
+  DragAndDropStatus,
 } from '../../types/drag-and-drop-config.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -36,6 +31,10 @@ export class DragAndDropPanelComponent {
   @Output() public drop = new EventEmitter<
     CdkDragDrop<DragAndDropItem<number>[]>
   >();
+
+  public get statusClass(): string {
+    return this.config.defaultStatus ?? DragAndDropStatus.Default;
+  }
 
   public onDrop(event: CdkDragDrop<DragAndDropItem<number>[]>): void {
     this.drop.emit(event);
