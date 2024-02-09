@@ -42,21 +42,8 @@ export class DragAndDropComponent implements OnChanges {
   @Input() public config: DragAndDropConfig = {
     ...DRAG_AND_DROP_DEFAULT_CONFIG,
   };
-
-  public unassignedItems: DragAndDropItem<number>[] = [
-    { id: 1, description: 'primero' },
-    { id: 2, description: 'segundo' },
-    { id: 3, description: 'tercero' },
-    { id: 4, description: 'cuarto' },
-    { id: 5, description: 'quinto' },
-  ];
-  public assignedItems: DragAndDropItem<number>[] = [
-    { id: 6, description: 'sexto' },
-    { id: 7, description: 'septimo' },
-    { id: 8, description: 'octavo' },
-    { id: 9, description: 'noveno' },
-    { id: 10, description: 'decimo' },
-  ];
+  @Input() public unassignedItems: DragAndDropItem<number>[] = [];
+  @Input() public assignedItems: DragAndDropItem<number>[] = [];
 
   public ngOnChanges({ config }: SimpleChanges): void {
     if (config?.currentValue)
@@ -85,12 +72,13 @@ export class DragAndDropComponent implements OnChanges {
     };
   }
 
-  private _getPanelSide({
-    id,
-  }: CdkDropList<DragAndDropItem<number>[]>): DragAndDropPanelSide {
-    const side = id.replace('drag-and-drop-panel-', '');
+  private _getPanelSide(
+    container: CdkDropList<DragAndDropItem<number>[]>
+  ): DragAndDropPanelSide {
+    console.log(container);
+    const side = container.id.replace('drag-and-drop-panel-', '');
     if (side !== 'left' && side !== 'right')
-      throw Error(`invalid side: '${side}' on '${id}' `);
+      throw Error(`invalid side: '${side}' on '${container.id}' `);
     return side;
   }
 }

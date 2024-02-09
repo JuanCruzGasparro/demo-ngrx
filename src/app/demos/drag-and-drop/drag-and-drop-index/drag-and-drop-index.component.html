@@ -1,6 +1,10 @@
 <div class="container">
   <h1 class="text-center">Drag & Drop</h1>
   <div>
-    <app-drag-and-drop [config]="dragAndDropConfig"></app-drag-and-drop>
+    <app-drag-and-drop
+      [config]="dragAndDropConfig"
+      [unassignedItems]="unassignedItems"
+      [assignedItems]="assignedItems"
+    ></app-drag-and-drop>
   </div>
 </div>

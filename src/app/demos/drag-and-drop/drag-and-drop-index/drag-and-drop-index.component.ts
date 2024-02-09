@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DragAndDropComponent } from '@shared/components/drag-and-drop/drag-and-drop.component';
 import { DragAndDropConfig } from '@shared/components/drag-and-drop/types/drag-and-drop-config.interface';
+import { DragAndDropItem } from '@shared/components/drag-and-drop/types/drag-and-drop.interface';
 import { MaterialModule } from '@shared/modules/material.module';
 
 @Component({
@@ -14,7 +15,6 @@ import { MaterialModule } from '@shared/modules/material.module';
 export class DragAndDropIndexComponent {
   public dragAndDropConfig: DragAndDropConfig = {
     left: {
-      // title: 'Left',
       side: 'left',
     },
     right: {
@@ -22,4 +22,18 @@ export class DragAndDropIndexComponent {
       side: 'right',
     },
   };
+  public assignedItems: DragAndDropItem<number>[] = [];
+  public unassignedItems: DragAndDropItem<number>[] = [
+    { id: 1, description: 'Casa' },
+    { id: 2, description: 'Pueblo' },
+    { id: 3, description: 'Edificio' },
+    { id: 4, description: 'Comisaria' },
+    { id: 5, description: 'Auto' },
+    { id: 6, description: 'Choza' },
+    { id: 7, description: 'Estación de bomberos' },
+    { id: 8, description: 'Mansión' },
+    { id: 9, description: 'Casa futurística' },
+    { id: 10, description: 'Hospital' },
+    { id: 11, description: 'Universidad' },
+  ];
 }
