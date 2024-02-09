@@ -12,43 +12,44 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { DragAndDropItem } from '../../drag-and-drop.interface';
+import { DragAndDropItem } from '../../types/drag-and-drop.interface';
+import { DragAndDropPanelConfig } from '../../types/drag-and-drop-config.interface';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-drag-and-drop-panel',
   standalone: true,
-  imports: [CdkDropList, CdkDrag],
+  imports: [CommonModule, FormsModule, CdkDropList, CdkDrag],
   templateUrl: './drag-and-drop-panel.component.html',
   styleUrl: './drag-and-drop-panel.component.scss',
 })
 export class DragAndDropPanelComponent {
-  @Input() public items: DragAndDropItem[] = [];
-  @Input() public connectedTo!: DragAndDropPanelComponent;
+  @Input() public config!: DragAndDropPanelConfig;
+  @Input() public items: DragAndDropItem<number>[] = [];
 
-  @Output() public emitDrop = new EventEmitter<any>();
+  @Output() public drop = new EventEmitter<
+    CdkDragDrop<DragAndDropItem<number>[]>
+  >();
 
-  @ViewChild('panel') public panel!: CdkDropList<DragAndDropItem[]>;
-
-  get panelConnection(): CdkDropList<DragAndDropItem[]> {
-    return this.connectedTo.panel;
-  }
-
-  public onDrop(event: CdkDragDrop<DragAndDropItem[]>): void {
-    console.log(event);
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
+  public onDrop(event: CdkDragDrop<DragAndDropItem<number>[]>): void {
+    this.drop.emit(event);
+    // moveItemInArray(this.items, event.previousIndex, event.currentIndex);
+    // console.log(event);
+    // if (event.previousContainer === event.container) {
+    //   moveItemInArray(
+    //     event.container.data,
+    //     event.previousIndex,
+    //     event.currentIndex
+    //   );
+    // } else {
+    //   transferArrayItem(
+    //     event.previousContainer.data,
+    //     event.container.data,
+    //     event.previousIndex,
+    //     event.currentIndex
+    //   );
+    // }
     // console.log('same container', event.container === event.previousContainer);
     // console.log(this.items[event.previousIndex]);
     // this.emitDrop.emit(event);

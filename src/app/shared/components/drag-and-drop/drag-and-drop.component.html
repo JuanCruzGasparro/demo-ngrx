@@ -1,51 +1,54 @@
-<!-- <div [id]="id" class="drag-and-drop"> -->
-<div class="example-container">
-  <h2>To do</h2>
-  <div
-    cdkDropList
-    #unassignedList="cdkDropList"
-    [cdkDropListData]="unassignedItems"
-    [cdkDropListConnectedTo]="[assignedList]"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-  >
-    @for (item of unassignedItems; track item.id) {
-    <div class="example-box" cdkDrag>{{ item.description }}</div>
-    }
-  </div>
-</div>
-
-<div class="example-container">
-  <h2>Done</h2>
-
-  <div
-    cdkDropList
-    #assignedList="cdkDropList"
-    [cdkDropListData]="assignedItems"
-    [cdkDropListConnectedTo]="[unassignedList]"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-  >
-    @for (item of assignedItems; track item.id) {
-    <div class="example-box" cdkDrag>{{ item.description }}</div>
-    }
-  </div>
-</div>
-<!-- <div class="drag-and-drop__container">
+<div [id]="id" class="drag-and-drop">
+  <!-- <div class="drag-and-drop__container">
+    <div class="drag-and-drop__panel">
+      <div
+        cdkDropList
+        #unassignedList="cdkDropList"
+        [cdkDropListData]="unassignedItems"
+        [cdkDropListConnectedTo]="[assignedList]"
+        class="drag-and-drop__panel-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        @for (item of unassignedItems; track item.id) {
+        <div class="drag-and-drop__panel-list-item" cdkDrag>
+          {{ item.description }}
+        </div>
+        }
+      </div>
+    </div>
+    <app-drag-and-drop-actions></app-drag-and-drop-actions>
+    <div class="drag-and-drop__panel">
+      <div
+        cdkDropList
+        #assignedList="cdkDropList"
+        [cdkDropListData]="assignedItems"
+        [cdkDropListConnectedTo]="[unassignedList]"
+        class="drag-and-drop__panel-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        @for (item of assignedItems; track item.id) {
+        <div class="drag-and-drop__panel-list-item" cdkDrag>
+          {{ item.description }}
+        </div>
+        }
+      </div>
+    </div>
+  </div> -->
+  <div class="drag-and-drop__container" cdkDropListGroup>
     <app-drag-and-drop-panel
       #unassignedPanel
-      [items]="items"
-      [connectedTo]="assignedPanel"
-      (emitDrop)="leftPanelDropHandler($event)"
+      [config]="config.left"
+      [items]="unassignedItems"
+      (drop)="onDropHandler($event)"
     ></app-drag-and-drop-panel>
 
     <app-drag-and-drop-actions></app-drag-and-drop-actions>
 
     <app-drag-and-drop-panel
       #assignedPanel
+      [config]="config.right"
       [items]="assignedItems"
-      [connectedTo]="unassignedPanel"
-      (emitDrop)="rightPanelDropHandler($event)"
+      (drop)="onDropHandler($event)"
     ></app-drag-and-drop-panel>
-  </div> -->
-<!-- </div> -->
+  </div>
+</div>

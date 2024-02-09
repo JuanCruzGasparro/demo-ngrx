@@ -1,15 +1,27 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MaterialModule } from '@shared/modules/material.module';
 import { DragAndDropPanelComponent } from './components/drag-and-drop-panel/drag-and-drop-panel.component';
 import { DragAndDropActionsComponent } from './components/drag-and-drop-actions/drag-and-drop-actions.component';
-import { DragAndDropConfig, DragAndDropItem } from './drag-and-drop.interface';
+import { DragAndDropItem } from './types/drag-and-drop.interface';
 import {
   CdkDrag,
   CdkDragDrop,
   CdkDropList,
+  CdkDropListGroup,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import {
+  DragAndDropConfig,
+  DragAndDropPanelSide,
+} from './types/drag-and-drop-config.interface';
+import { DRAG_AND_DROP_DEFAULT_CONFIG } from './utils/default-config';
 
 @Component({
   selector: 'app-drag-and-drop',
@@ -18,53 +30,67 @@ import {
     MaterialModule,
     DragAndDropPanelComponent,
     DragAndDropActionsComponent,
+    CdkDropListGroup,
     CdkDropList,
     CdkDrag,
   ],
   templateUrl: './drag-and-drop.component.html',
   styleUrl: './drag-and-drop.component.scss',
 })
-export class DragAndDropComponent {
+export class DragAndDropComponent implements OnChanges {
   @Input() public id: string = 'drag-and-drop';
-  @Input() public config: DragAndDropConfig = {};
+  @Input() public config: DragAndDropConfig = {
+    ...DRAG_AND_DROP_DEFAULT_CONFIG,
+  };
 
-  @ViewChild('unassignedPanel')
-  public unassignedPanel!: DragAndDropPanelComponent;
-  @ViewChild('assignedPanel')
-  public assignedPanel!: DragAndDropPanelComponent;
-
-  public unassignedItems: DragAndDropItem[] = [
+  public unassignedItems: DragAndDropItem<number>[] = [
     { id: 1, description: 'primero' },
     { id: 2, description: 'segundo' },
     { id: 3, description: 'tercero' },
     { id: 4, description: 'cuarto' },
     { id: 5, description: 'quinto' },
   ];
+  public assignedItems: DragAndDropItem<number>[] = [
+    { id: 6, description: 'sexto' },
+    { id: 7, description: 'septimo' },
+    { id: 8, description: 'octavo' },
+    { id: 9, description: 'noveno' },
+    { id: 10, description: 'decimo' },
+  ];
 
-  public assignedItems: DragAndDropItem[] = [];
-
-  public leftPanelDropHandler(item: DragAndDropItem): void {
-    console.log('left', item);
+  public ngOnChanges({ config }: SimpleChanges): void {
+    if (config?.currentValue)
+      this.config = this._patchConfig(config.currentValue);
   }
 
-  public rightPanelDropHandler(item: DragAndDropItem): void {
-    console.log('right', item);
-  }
-
-  drop(event: CdkDragDrop<DragAndDropItem[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+  public onDropHandler(event: CdkDragDrop<DragAndDropItem<number>[]>) {
+    const { previousContainer, previousIndex, container, currentIndex } = event;
+    if (previousContainer === container) {
+      const side = this._getPanelSide(container);
+      if (this.config[side]?.canReorder)
+        moveItemInArray(container.data, previousIndex, currentIndex);
     } else {
       transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
+        previousContainer.data,
+        container.data,
+        previousIndex,
+        currentIndex
       );
     }
+  }
+  private _patchConfig({ left, right }: DragAndDropConfig): DragAndDropConfig {
+    return {
+      left: { ...DRAG_AND_DROP_DEFAULT_CONFIG.left, ...left },
+      right: { ...DRAG_AND_DROP_DEFAULT_CONFIG.right, ...right },
+    };
+  }
+
+  private _getPanelSide({
+    id,
+  }: CdkDropList<DragAndDropItem<number>[]>): DragAndDropPanelSide {
+    const side = id.replace('drag-and-drop-panel-', '');
+    if (side !== 'left' && side !== 'right')
+      throw Error(`invalid side: '${side}' on '${id}' `);
+    return side;
   }
 }
