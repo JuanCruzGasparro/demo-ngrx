@@ -13,7 +13,7 @@
       <mat-icon>drag_indicator</mat-icon>
       <mat-checkbox *ngIf="config.isSelectable"></mat-checkbox>
       <div class="drag-and-drop__item-label">
-        {{ item.description }}
+        {{ item.id + " - " + item.description }}
       </div>
       <span
         class="drag-and-drop__item-status"

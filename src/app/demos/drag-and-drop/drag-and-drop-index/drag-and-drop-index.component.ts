@@ -21,15 +21,9 @@ export class DragAndDropIndexComponent {
     right: {
       hasActionButton: true,
       hasStatus: true,
+      canReorder: true,
     },
   });
-  // public dragAndDropConfig: DragAndDropConfig = {
-  // right: {
-  //   side: 'right',
-  //   hasActionButton: true,
-  //   hasStatus: true,
-  // },
-  // };
   public assignedItems: DragAndDropItem<number>[] = [];
   public unassignedItems: DragAndDropItem<number>[] = [
     { id: 1, description: 'Casa' },
@@ -42,6 +36,13 @@ export class DragAndDropIndexComponent {
     { id: 8, description: 'Mansión' },
     { id: 9, description: 'Casa futurística' },
     { id: 10, description: 'Hospital' },
-    { id: 11, description: 'Universidad' },
   ];
+
+  public assignedItemsChangeHandler(list: number[]): void {
+    console.log('assigned', list);
+  }
+
+  public unassignedItemsChangeHandler(list: number[]): void {
+    console.log('unassigned', list);
+  }
 }

@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { DragAndDropItem } from '../../types/drag-and-drop.interface';
 import {
@@ -13,7 +7,6 @@ import {
   DragAndDropStatus,
 } from '../../types/drag-and-drop-config.interface';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/modules/material.module';
 
 @Component({

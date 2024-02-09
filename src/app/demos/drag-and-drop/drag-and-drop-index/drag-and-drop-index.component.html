@@ -5,6 +5,8 @@
       [config]="dragAndDropConfig"
       [unassignedItems]="unassignedItems"
       [assignedItems]="assignedItems"
+      (assignedItemsChange)="assignedItemsChangeHandler($event)"
+      (unassignedItemsChange)="unassignedItemsChangeHandler($event)"
     ></app-drag-and-drop>
   </div>
 </div>

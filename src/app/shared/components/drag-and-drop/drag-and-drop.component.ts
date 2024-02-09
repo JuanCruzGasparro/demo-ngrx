@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -25,6 +27,7 @@ import {
   DRAG_AND_DROP_DEFAULT_CONFIG,
   buildDragAndDropConfig,
 } from './utils/default-config';
+import { DragAndDropBase } from './utils/drag-and-drop-base.class';
 
 @Component({
   selector: 'app-drag-and-drop',
@@ -40,50 +43,43 @@ import {
   templateUrl: './drag-and-drop.component.html',
   styleUrl: './drag-and-drop.component.scss',
 })
-export class DragAndDropComponent implements OnChanges {
+export class DragAndDropComponent extends DragAndDropBase<number> {
   @Input() public id: string = 'drag-and-drop';
   @Input() public config: DragAndDropConfig = buildDragAndDropConfig();
-  @Input() public unassignedItems: DragAndDropItem<number>[] = [];
-  @Input() public assignedItems: DragAndDropItem<number>[] = [];
+  @Input() public override unassignedItems: DragAndDropItem<number>[] = [];
+  @Input() public override assignedItems: DragAndDropItem<number>[] = [];
 
-  public ngOnChanges({ config }: SimpleChanges): void {
-    if (config?.currentValue)
-      this.config = this._patchConfig(config.currentValue);
-  }
+  @Output() public assignedItemsChange: EventEmitter<number[]> =
+    new EventEmitter();
+  @Output() public unassignedItemsChange: EventEmitter<number[]> =
+    new EventEmitter();
 
-  public onDropHandler(event: CdkDragDrop<DragAndDropItem<number>[]>) {
-    const { previousContainer, previousIndex, container, currentIndex } = event;
-    if (previousContainer === container) {
-      const side = this._getPanelSide(container);
-      if (this.config[side]?.canReorder)
-        moveItemInArray(container.data, previousIndex, currentIndex);
-    } else {
-      transferArrayItem(
-        previousContainer.data,
-        container.data,
-        previousIndex,
-        currentIndex
-      );
+  public onUnassignedPanelDropHandler(
+    event: CdkDragDrop<DragAndDropItem<number>[]>
+  ): void {
+    const { canReorder } = this.config.left;
+    this.onDrop(event, canReorder);
+    if (event.previousContainer !== event.container) {
+      this.emitAssignedItems();
+      return;
     }
-  }
-  private _patchConfig({ left, right }: DragAndDropConfig): DragAndDropConfig {
-    return {
-      left: left
-        ? { ...DRAG_AND_DROP_DEFAULT_CONFIG.left, ...left }
-        : DRAG_AND_DROP_DEFAULT_CONFIG.left,
-      right: right
-        ? { ...DRAG_AND_DROP_DEFAULT_CONFIG.right, ...right }
-        : DRAG_AND_DROP_DEFAULT_CONFIG.right,
-    } as DragAndDropConfig;
+    if (canReorder) this.emitUnassignedItems();
   }
 
-  private _getPanelSide(
-    container: CdkDropList<DragAndDropItem<number>[]>
-  ): DragAndDropPanelSide {
-    console.log(container);
-    const side = container.id.replace('drag-and-drop-panel-', '');
-    if (side !== 'left' && side !== 'right')
-      throw Error(`invalid side: '${side}' on '${container.id}' `);
-    return side;
+  public onAssignedPanelDropHandler(
+    event: CdkDragDrop<DragAndDropItem<number>[]>
+  ): void {
+    const { canReorder } = this.config.right;
+    this.onDrop(event, canReorder);
+    if (!canReorder && event.previousContainer === event.container) return;
+    this.emitAssignedItems();
+  }
+
+  private emitAssignedItems(): void {
+    this.assignedItemsChange.emit(this.getAssignedIds());
+  }
+
+  private emitUnassignedItems(): void {
+    this.unassignedItemsChange.emit(this.getUnassignedIds());
   }
 }

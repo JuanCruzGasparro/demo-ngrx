@@ -1,4 +1,4 @@
-export type DragAndDropItem<T extends number | string> = {
+export type DragAndDropItem<T> = {
   id: T;
   description: string;
 };
