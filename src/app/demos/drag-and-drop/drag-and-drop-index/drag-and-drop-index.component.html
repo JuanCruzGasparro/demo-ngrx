@@ -1,0 +1,12 @@
+<div class="container">
+  <h1 class="text-center">Drag & Drop</h1>
+  <div>
+    <app-drag-and-drop
+      [config]="dragAndDropConfig"
+      [unassigned]="unassignedItems"
+      [assigned]="assignedItems"
+      (assignedItemsChange)="assignedItemsChangeHandler($event)"
+      (unassignedItemsChange)="unassignedItemsChangeHandler($event)"
+    ></app-drag-and-drop>
+  </div>
+</div>

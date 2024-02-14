@@ -1,0 +1,20 @@
+$scrollbar-width: 8px;
+$scrollbar-track-background: #f1f1f1;
+$scrollbar-thumb-background: #888888;
+$scrollbar-thumb-hover-background: #555555;
+
+::-webkit-scrollbar {
+  width: $scrollbar-width;
+}
+
+::-webkit-scrollbar-track {
+  background: $scrollbar-track-background;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-thumb-background;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $scrollbar-thumb-hover-background;
+}

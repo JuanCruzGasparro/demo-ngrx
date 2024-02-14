@@ -16,7 +16,10 @@ type IndexLink = {
   styleUrl: './index.component.scss',
 })
 export class IndexComponent {
-  public links: IndexLink[] = [{ name: 'Basic Todos', path: 'todos' }];
+  public links: IndexLink[] = [
+    { name: 'Basic Todos', path: 'todos' },
+    { name: 'Drag & Drop', path: 'drag-and-drop' },
+  ];
 
   constructor(private _router: Router) {}
 

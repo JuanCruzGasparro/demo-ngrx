@@ -1,0 +1,123 @@
+$dad-spacer: 18px;
+$dad-gap: 10px;
+$dad-action-button-size: 24px;
+
+$dad-panel-width: 940px;
+$dad-panel-border: 1px solid #dbdbdb;
+$dad-panel-border-radius: 5px;
+$dad-panel-background-color: #ffffff;
+
+$dad-panel-list-height: 400px;
+$dad-panel-list-item-height: 56px;
+$dad-panel-list-item-status-size: 10px;
+$dad-panel-list-item-status-default: grey;
+$dad-panel-list-item-status-success: green;
+$dad-panel-list-item-status-error: red;
+
+.cdk-drag-preview {
+  border: $dad-panel-border;
+  border-radius: $dad-panel-border-radius !important;
+  background-color: $dad-panel-background-color !important;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-and-drop {
+  margin-top: $dad-spacer;
+  margin-bottom: $dad-spacer;
+
+  // Container
+  &__container {
+    width: $dad-panel-width;
+    max-width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: $dad-gap;
+  }
+
+  // Panel
+  &__panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__panel-list {
+    $self: &;
+    padding: 0;
+    overflow-y: auto;
+    height: $dad-panel-list-height;
+    border-radius: $dad-panel-border-radius;
+    border: $dad-panel-border;
+
+    &.cdk-drop-list-dragging {
+      #{$self}-item:not(.cdk-drag-placeholder) {
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+      }
+    }
+  }
+
+  &__panel-list-item {
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: $dad-panel-list-item-height;
+    padding-left: $dad-spacer;
+    padding-right: $dad-spacer;
+    border-bottom: $dad-panel-border;
+    background-color: $dad-panel-background-color;
+  }
+
+  &__item-label {
+    flex: 1;
+  }
+
+  &__item-status {
+    display: block;
+    width: $dad-panel-list-item-status-size;
+    height: $dad-panel-list-item-status-size;
+    border-radius: 50%;
+    background-color: $dad-panel-list-item-status-default;
+
+    &:not(:last-child) {
+      margin-right: $dad-spacer;
+    }
+
+    &.success {
+      background-color: $dad-panel-list-item-status-success;
+    }
+
+    &.error {
+      background-color: $dad-panel-list-item-status-error;
+    }
+  }
+
+  // Actions
+  &__actions {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: $dad-gap;
+    max-height: 400px;
+  }
+
+  &__actions-list-item {
+    width: $dad-action-button-size;
+    height: $dad-action-button-size;
+  }
+}
