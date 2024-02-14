@@ -10,10 +10,14 @@
   >
     @for (item of items; track $index) {
     <div role="listitem" cdkDrag class="drag-and-drop__panel-list-item">
-      <mat-icon>drag_indicator</mat-icon>
-      <mat-checkbox *ngIf="config.isSelectable"></mat-checkbox>
+      <mat-icon>{{ dragIndicatorIcon }}</mat-icon>
+      <mat-checkbox
+        *ngIf="config.isSelectable"
+        [checked]="item.selected"
+        (change)="item.selected = $event.checked"
+      ></mat-checkbox>
       <div class="drag-and-drop__item-label">
-        {{ item.id + " - " + item.description }}
+        {{ item.description }}
       </div>
       <span
         class="drag-and-drop__item-status"

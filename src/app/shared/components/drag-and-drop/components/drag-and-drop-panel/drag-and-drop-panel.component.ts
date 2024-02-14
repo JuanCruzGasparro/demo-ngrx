@@ -25,6 +25,8 @@ export class DragAndDropPanelComponent {
     CdkDragDrop<DragAndDropItem<number>[]>
   >();
 
+  public dragIndicatorIcon = 'drag_indicator';
+
   public get statusClass(): string {
     return this.config.defaultStatus ?? DragAndDropStatus.Default;
   }

@@ -16,17 +16,9 @@ import {
   CdkDragDrop,
   CdkDropList,
   CdkDropListGroup,
-  moveItemInArray,
-  transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import {
-  DragAndDropConfig,
-  DragAndDropPanelSide,
-} from './types/drag-and-drop-config.interface';
-import {
-  DRAG_AND_DROP_DEFAULT_CONFIG,
-  buildDragAndDropConfig,
-} from './utils/default-config';
+import { DragAndDropConfig } from './types/drag-and-drop-config.interface';
+import { buildDragAndDropConfig } from './utils/default-config';
 import { DragAndDropBase } from './utils/drag-and-drop-base.class';
 
 @Component({
@@ -46,8 +38,12 @@ import { DragAndDropBase } from './utils/drag-and-drop-base.class';
 export class DragAndDropComponent extends DragAndDropBase<number> {
   @Input() public id: string = 'drag-and-drop';
   @Input() public config: DragAndDropConfig = buildDragAndDropConfig();
-  @Input() public override unassignedItems: DragAndDropItem<number>[] = [];
-  @Input() public override assignedItems: DragAndDropItem<number>[] = [];
+  @Input() public set unassigned(value: DragAndDropItem<number>[]) {
+    this.unassignedItems = this.dragAndDropItemsBuilder(value);
+  }
+  @Input() public set assigned(value: DragAndDropItem<number>[]) {
+    this.assignedItems = this.dragAndDropItemsBuilder(value);
+  }
 
   @Output() public assignedItemsChange: EventEmitter<number[]> =
     new EventEmitter();
@@ -73,6 +69,13 @@ export class DragAndDropComponent extends DragAndDropBase<number> {
     this.onDrop(event, canReorder);
     if (!canReorder && event.previousContainer === event.container) return;
     this.emitAssignedItems();
+  }
+  public moveToAsssignedHandler(): void {
+    this.moveCheckedUnassignedItems();
+  }
+
+  public moveToUnasssignedHandler(): void {
+    this.moveCheckedAssignedItems();
   }
 
   private emitAssignedItems(): void {

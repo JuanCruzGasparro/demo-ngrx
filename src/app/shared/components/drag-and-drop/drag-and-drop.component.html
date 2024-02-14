@@ -8,7 +8,10 @@
       (drop)="onUnassignedPanelDropHandler($event)"
     ></app-drag-and-drop-panel>
 
-    <app-drag-and-drop-actions></app-drag-and-drop-actions>
+    <app-drag-and-drop-actions
+      (moveToAsssigned)="moveToAsssignedHandler()"
+      (moveToUnasssigned)="moveToUnasssignedHandler()"
+    ></app-drag-and-drop-actions>
 
     <app-drag-and-drop-panel
       #assignedPanel

@@ -3,8 +3,8 @@
   <div>
     <app-drag-and-drop
       [config]="dragAndDropConfig"
-      [unassignedItems]="unassignedItems"
-      [assignedItems]="assignedItems"
+      [unassigned]="unassignedItems"
+      [assigned]="assignedItems"
       (assignedItemsChange)="assignedItemsChangeHandler($event)"
       (unassignedItemsChange)="unassignedItemsChangeHandler($event)"
     ></app-drag-and-drop>
