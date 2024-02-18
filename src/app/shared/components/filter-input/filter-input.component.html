@@ -1,5 +1,10 @@
 <mat-form-field appearance="outline">
   <mat-label>{{ label }}</mat-label>
-  <input matInput autocomplete="off" />
+  <input
+    matInput
+    autocomplete="off"
+    [value]="filter()"
+    (keyup)="changeHandler($event)"
+  />
   <mat-icon matSuffix>star</mat-icon>
 </mat-form-field>

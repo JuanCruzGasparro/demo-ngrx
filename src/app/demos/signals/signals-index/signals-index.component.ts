@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FilterInputComponent } from '@shared/components/filter-input/filter-input.component';
 import { MaterialModule } from '@shared/modules/material.module';
 
@@ -9,4 +9,10 @@ import { MaterialModule } from '@shared/modules/material.module';
   templateUrl: './signals-index.component.html',
   styleUrl: './signals-index.component.scss',
 })
-export class SignalsIndexComponent {}
+export class SignalsIndexComponent {
+  filterInitialValue = 'Houses';
+
+  filterInputChange(term: string): void {
+    console.log(term);
+  }
+}
