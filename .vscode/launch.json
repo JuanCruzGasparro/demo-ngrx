@@ -4,6 +4,12 @@
   "configurations": [
     {
       "name": "ng serve",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "npm: start"
+    },
+    {
+      "name": "ng serve: Chrome",
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
@@ -18,9 +24,9 @@
     },
     {
       "name": "run api",
+      "type": "node",
       "request": "launch",
-      "preLaunchTask": "npm: api",
-      "type": "node"
+      "preLaunchTask": "npm: api"
     }
   ]
 }

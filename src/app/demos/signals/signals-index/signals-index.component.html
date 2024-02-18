@@ -1,0 +1,14 @@
+<div id="signals-index-page" class="container">
+  <h2>Signals</h2>
+
+  <p>Ejemplos del funcionamiento de <i>&#64;angular/core signals</i>.</p>
+
+  <hr />
+
+  <h3>Fitler component with signals</h3>
+
+  <app-filter-input
+    [value]="filterInitialValue"
+    (changer)="filterInputChange($event)"
+  ></app-filter-input>
+</div>

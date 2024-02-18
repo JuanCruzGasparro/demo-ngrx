@@ -1,4 +1,17 @@
+$border-color: #dbdbdb;
+
 .list {
   width: 450px;
   margin: 0 auto;
+  padding: 0;
+
+  border: 1px solid $border-color;
+  border-radius: 5px;
+
+  &__item {
+    border-bottom: 1px solid $border-color;
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
 }
