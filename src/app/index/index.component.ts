@@ -19,7 +19,7 @@ export class IndexComponent {
   public links: IndexLink[] = [
     { name: 'Basic Todos', path: 'todos' },
     { name: 'Drag & Drop', path: 'drag-and-drop' },
-    { name: 'Signals', path: 'signals' },
+    { name: 'Signals 🧪', path: 'signals' },
   ];
 
   constructor(private _router: Router) {}

@@ -1,8 +1,10 @@
 <div class="drag-and-drop__panel">
   <h3>{{ config.title }}</h3>
-  <app-drag-and-drop-panel-filter
-    *ngIf="config.hasFilter"
-  ></app-drag-and-drop-panel-filter>
+  <app-filter-input
+    class="drag-and-drop-panel-filter"
+    [debounce]="filterDebounceTime"
+    (change)="filterChange($event)"
+  ></app-filter-input>
   <div
     [id]="'drag-and-drop-panel-' + side"
     class="drag-and-drop__panel-list"

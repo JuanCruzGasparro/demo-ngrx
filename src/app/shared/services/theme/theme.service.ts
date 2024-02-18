@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Theme } from '@shared/enums/theme.enum';
 import { BehaviorSubject } from 'rxjs';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  private _isDarkMode$ = new BehaviorSubject<boolean>(false);
+  private readonly _THEME_STORE_KEY = 'uiTheme';
+  readonly theme = signal<'dark' | 'light'>(this._config.uiTheme);
 
-  private _THEME_STORE_KEY = 'isDarkMode';
-
-  constructor() {}
+  constructor(private _config: ConfigService) {
+    if (!this.isDarkMode) this.isDarkMode = this._config.uiTheme === 'dark';
+  }
 
   get isDarkMode(): boolean {
     return JSON.parse(localStorage.getItem(this._THEME_STORE_KEY) || 'false');
@@ -22,7 +24,6 @@ export class ThemeService {
   }
 
   toggleDarkMode(): void {
-    this._isDarkMode$.next(!this.isDarkMode);
     this.isDarkMode = !this.isDarkMode;
   }
 }

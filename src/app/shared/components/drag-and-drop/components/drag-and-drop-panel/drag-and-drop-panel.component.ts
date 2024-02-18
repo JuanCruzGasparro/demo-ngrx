@@ -8,7 +8,7 @@ import {
 } from '../../types/drag-and-drop-config.interface';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/modules/material.module';
-import { DragAndDropPanelFilterComponent } from '../drag-and-drop-panel-filter/drag-and-drop-panel-filter.component';
+import { FilterInputComponent } from '@shared/components/filter-input/filter-input.component';
 
 @Component({
   selector: 'app-drag-and-drop-panel',
@@ -18,7 +18,7 @@ import { DragAndDropPanelFilterComponent } from '../drag-and-drop-panel-filter/d
     MaterialModule,
     CdkDropList,
     CdkDrag,
-    DragAndDropPanelFilterComponent,
+    FilterInputComponent,
   ],
   templateUrl: './drag-and-drop-panel.component.html',
   styleUrl: './drag-and-drop-panel.component.scss',
@@ -33,9 +33,14 @@ export class DragAndDropPanelComponent {
   >();
 
   public dragIndicatorIcon = 'drag_indicator';
+  public filterDebounceTime = 350;
 
   public get statusClass(): string {
     return this.config.defaultStatus ?? DragAndDropStatus.Default;
+  }
+
+  public filterChange(term: string): void {
+    console.log('filter', term);
   }
 
   public onDrop(event: CdkDragDrop<DragAndDropItem<number>[]>): void {
