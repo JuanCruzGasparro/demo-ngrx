@@ -18,6 +18,7 @@ export class AppComponent {
   constructor(private _themeService: ThemeService) {}
 
   getThemeClass(): string {
-    return this._themeService.isDarkMode ? 'dark-theme' : 'light-theme';
+    // return this._themeService.isDarkMode ? 'dark-theme' : 'light-theme';
+    return '';
   }
 }

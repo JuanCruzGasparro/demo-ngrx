@@ -2,7 +2,7 @@ import { IEnvironment } from '@shared/interfaces/environment.interface';
 
 export const environment: IEnvironment = {
   ui: {
-    theme: 'dark',
+    theme: 'light',
   },
   api: {
     url: 'http://localhost:3000',

@@ -21,10 +21,7 @@ $light-theme: mat.define-light-theme(
   )
 );
 
-@include mat.core-color($dark-theme);
-@include mat.all-component-themes($dark-theme);
+$theme: if(prefers-color-scheme(light), $light-theme, $dark-theme);
 
-@media (prefers-color-scheme: light) {
-  @include mat.core-color($light-theme);
-  @include mat.button-color($light-theme);
-}
+@include mat.core-color($theme);
+@include mat.all-component-themes($theme);
