@@ -1,12 +1,10 @@
 <div class="container">
   <h1 class="text-center">Demos</h1>
-  <div class="list">
-    <mat-action-list>
-      @for (link of links; track $index) {
-      <button mat-list-item (click)="redirectTo(link)">
-        {{ link.name }}
-      </button>
-      }
-    </mat-action-list>
-  </div>
+  <mat-action-list class="list">
+    @for (link of links; track $index) {
+    <button mat-list-item class="list__item" (click)="redirectTo(link)">
+      {{ link.name }}
+    </button>
+    }
+  </mat-action-list>
 </div>
