@@ -31,9 +31,6 @@ $dad-panel-list-item-status-error: red;
 }
 
 .drag-and-drop {
-  margin-top: $dad-spacer;
-  margin-bottom: $dad-spacer;
-
   // Container
   &__container {
     width: $dad-panel-width;
@@ -48,6 +45,10 @@ $dad-panel-list-item-status-error: red;
   &__panel {
     display: flex;
     flex-direction: column;
+  }
+
+  &__panel-filter {
+    width: 100%;
   }
 
   &__panel-list {

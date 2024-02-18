@@ -8,11 +8,18 @@ import {
 } from '../../types/drag-and-drop-config.interface';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/modules/material.module';
+import { DragAndDropPanelFilterComponent } from '../drag-and-drop-panel-filter/drag-and-drop-panel-filter.component';
 
 @Component({
   selector: 'app-drag-and-drop-panel',
   standalone: true,
-  imports: [CommonModule, MaterialModule, CdkDropList, CdkDrag],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    CdkDropList,
+    CdkDrag,
+    DragAndDropPanelFilterComponent,
+  ],
   templateUrl: './drag-and-drop-panel.component.html',
   styleUrl: './drag-and-drop-panel.component.scss',
 })
