@@ -1,12 +1,16 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-export interface DragAndDropItem<T extends string | number> {
+export type DragAndDropIdType = string | number;
+
+export interface DragAndDropItem<T extends DragAndDropIdType> {
   id: T;
   description: string;
   selected?: boolean;
 }
 
-export interface IDragAndDropBase<T extends string | number> {
+export interface IDragAndDropPanel {}
+
+export interface IDragAndDropCore<T extends DragAndDropIdType> {
   unassignedItems: DragAndDropItem<T>[];
   assignedItems: DragAndDropItem<T>[];
 

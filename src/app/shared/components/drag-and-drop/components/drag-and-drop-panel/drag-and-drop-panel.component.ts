@@ -1,11 +1,18 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { DragAndDropItem } from '../../types/drag-and-drop.interface';
+import { DragAndDropItem } from '../../interfaces/drag-and-drop.interface';
 import {
   DragAndDropPanelConfig,
   DragAndDropPanelSide,
   DragAndDropStatus,
-} from '../../types/drag-and-drop-config.interface';
+} from '../../interfaces/drag-and-drop-config.interface';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/modules/material.module';
 import { FilterInputComponent } from '@shared/components/filter-input/filter-input.component';
@@ -23,27 +30,43 @@ import { FilterInputComponent } from '@shared/components/filter-input/filter-inp
   templateUrl: './drag-and-drop-panel.component.html',
   styleUrl: './drag-and-drop-panel.component.scss',
 })
-export class DragAndDropPanelComponent {
+export class DragAndDropPanelComponent implements OnChanges {
   @Input() public side!: DragAndDropPanelSide;
   @Input() public config!: DragAndDropPanelConfig;
   @Input() public items: DragAndDropItem<number>[] = [];
 
-  @Output() public drop = new EventEmitter<
+  @Output() public update = new EventEmitter<
     CdkDragDrop<DragAndDropItem<number>[]>
   >();
+  // @Output() public filter = new EventEmitter<string>();
 
   public dragIndicatorIcon = 'drag_indicator';
   public filterDebounceTime = 350;
+
+  public filteredItems: DragAndDropItem<number>[] = [];
+
+  ngOnChanges({ items }: SimpleChanges): void {
+    if (items?.currentValue) {
+      this.filteredItems = items.currentValue;
+    }
+  }
 
   public get statusClass(): string {
     return this.config.defaultStatus ?? DragAndDropStatus.Default;
   }
 
   public filterChange(term: string): void {
-    console.log('filter', term);
+    this.filteredItems =
+      term.length >= 3 ? this._getFilteredItemsByTerm(term) : this.items;
   }
 
   public onDrop(event: CdkDragDrop<DragAndDropItem<number>[]>): void {
-    this.drop.emit(event);
+    this.update.emit(event);
+  }
+
+  private _getFilteredItemsByTerm(term: string): DragAndDropItem<number>[] {
+    return this.items.filter(({ description }) =>
+      description.toLocaleLowerCase().includes(term.toLocaleLowerCase())
+    );
   }
 }

@@ -3,7 +3,7 @@
   <app-filter-input
     class="drag-and-drop-panel-filter"
     [debounce]="filterDebounceTime"
-    (change)="filterChange($event)"
+    (filter)="filterChange($event)"
   ></app-filter-input>
   <div
     [id]="'drag-and-drop-panel-' + side"
@@ -13,7 +13,7 @@
     [cdkDropListData]="items"
     (cdkDropListDropped)="onDrop($event)"
   >
-    @for (item of items; track $index) {
+    @for (item of filteredItems; track $index) {
     <div role="listitem" cdkDrag class="drag-and-drop__panel-list-item">
       <mat-icon>{{ dragIndicatorIcon }}</mat-icon>
       <mat-checkbox

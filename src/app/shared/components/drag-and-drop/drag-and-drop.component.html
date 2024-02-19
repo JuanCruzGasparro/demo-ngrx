@@ -5,7 +5,7 @@
       side="left"
       [config]="config.left"
       [items]="unassignedItems"
-      (drop)="onUnassignedPanelDropHandler($event)"
+      (update)="onUnassignedPanelDropHandler($event)"
     ></app-drag-and-drop-panel>
 
     <app-drag-and-drop-actions
@@ -18,7 +18,7 @@
       side="right"
       [config]="config.right"
       [items]="assignedItems"
-      (drop)="onAssignedPanelDropHandler($event)"
+      (update)="onAssignedPanelDropHandler($event)"
     ></app-drag-and-drop-panel>
   </div>
 </div>

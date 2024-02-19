@@ -4,16 +4,21 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import {
+  DragAndDropIdType,
   DragAndDropItem,
-  IDragAndDropBase,
-} from '../types/drag-and-drop.interface';
+  IDragAndDropCore,
+} from '../interfaces/drag-and-drop.interface';
 import { DRAG_AND_DROP_CAN_REORDER_DEFAULT } from './default-config';
+import { DragAndDropFilter } from './drag-and-drop-filter-base.class';
 
-export class DragAndDropBase<T extends string | number>
-  implements IDragAndDropBase<T>
+export class DragAndDropCore<T extends DragAndDropIdType>
+  implements IDragAndDropCore<T>
 {
   unassignedItems: DragAndDropItem<T>[] = [];
   assignedItems: DragAndDropItem<T>[] = [];
+
+  unassignedFilter = new DragAndDropFilter();
+  assignedFilter = new DragAndDropFilter();
 
   getAssignedIds(): T[] {
     return this.assignedItems.map((item) => item.id);
@@ -44,7 +49,7 @@ export class DragAndDropBase<T extends string | number>
   }
 
   onDrop(
-    event: CdkDragDrop<DragAndDropItem<T>[], DragAndDropItem<T>[], any>,
+    event: CdkDragDrop<DragAndDropItem<T>[]>,
     canReorder: boolean = DRAG_AND_DROP_CAN_REORDER_DEFAULT
   ): void {
     const { previousContainer, container } = event;
@@ -54,6 +59,8 @@ export class DragAndDropBase<T extends string | number>
     }
     if (canReorder) this._moveItemInArray(event);
   }
+
+  //#region Private methods
 
   private _getCheckedItems(items: DragAndDropItem<T>[]): DragAndDropItem<T>[] {
     return items
@@ -72,7 +79,7 @@ export class DragAndDropBase<T extends string | number>
     container,
     previousIndex,
     currentIndex,
-  }: CdkDragDrop<DragAndDropItem<T>[], DragAndDropItem<T>[], any>): void {
+  }: CdkDragDrop<DragAndDropItem<T>[]>): void {
     transferArrayItem(
       previousContainer.data,
       container.data,
@@ -85,7 +92,9 @@ export class DragAndDropBase<T extends string | number>
     container: { data },
     previousIndex,
     currentIndex,
-  }: CdkDragDrop<DragAndDropItem<T>[], DragAndDropItem<T>[], any>): void {
+  }: CdkDragDrop<DragAndDropItem<T>[]>): void {
     moveItemInArray(data, previousIndex, currentIndex);
   }
+
+  //#endregion Private methods
 }

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/modules/material.module';
-import { Subject, debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-filter-input',
@@ -22,9 +22,9 @@ export class FilterInputComponent implements OnInit, OnChanges {
   @Input() public value = '';
   @Input() public debounce = 0;
   @Input() public label = 'Filter';
-  @Input() public icon = 'find';
+  @Input() public icon = 'search';
 
-  @Output() public change = new EventEmitter<string>();
+  @Output() public filter = new EventEmitter<string>();
 
   readonly searchTerm = new Subject<string>();
 
@@ -33,7 +33,7 @@ export class FilterInputComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.searchTerm
       .pipe(distinctUntilChanged(), debounceTime(this.debounce))
-      .subscribe((term: string) => this.change.emit(term));
+      .subscribe((term: string) => this.filter.emit(term));
   }
 
   ngOnChanges({ value }: SimpleChanges): void {

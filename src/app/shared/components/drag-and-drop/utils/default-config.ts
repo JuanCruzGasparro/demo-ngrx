@@ -2,7 +2,7 @@ import {
   DragAndDropConfig,
   DragAndDropConfigBuilder,
   DragAndDropStatus,
-} from '../types/drag-and-drop-config.interface';
+} from '../interfaces/drag-and-drop-config.interface';
 
 export const DRAG_AND_DROP_CAN_REORDER_DEFAULT = false;
 
