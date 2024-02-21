@@ -16,6 +16,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/modules/material.module';
 import { FilterInputComponent } from '@shared/components/filter-input/filter-input.component';
+import { FeedbackComponent } from '@shared/components/feedback/feedback.component';
+import { Feedback } from '@shared/components/feedback/utils/feedback.class';
+import {
+  FeedbackSize,
+  FeedbackType,
+} from '@shared/components/feedback/utils/feedback.enum';
 
 @Component({
   selector: 'app-drag-and-drop-panel',
@@ -26,6 +32,7 @@ import { FilterInputComponent } from '@shared/components/filter-input/filter-inp
     CdkDropList,
     CdkDrag,
     FilterInputComponent,
+    FeedbackComponent,
   ],
   templateUrl: './drag-and-drop-panel.component.html',
   styleUrl: './drag-and-drop-panel.component.scss',
@@ -44,6 +51,12 @@ export class DragAndDropPanelComponent implements OnChanges {
   public filterDebounceTime = 350;
 
   public filteredItems: DragAndDropItem<number>[] = [];
+  public emptyFeedback = new Feedback(
+    FeedbackType.noRecords,
+    FeedbackSize.Small
+  );
+
+  constructor() {}
 
   ngOnChanges({ items }: SimpleChanges): void {
     if (items?.currentValue) {

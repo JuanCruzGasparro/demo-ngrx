@@ -33,6 +33,6 @@
         <mat-icon>{{ config.actionButtonIcon }}</mat-icon>
       </button>
     </div>
-    }
+    } @empty { <app-feedback [feedback]="emptyFeedback"></app-feedback> }
   </div>
 </div>
