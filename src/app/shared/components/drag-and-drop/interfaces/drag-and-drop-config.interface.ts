@@ -18,6 +18,7 @@ export interface DragAndDropConfigBuilder {
 
 export interface DragAndDropPanelConfig {
   title?: string;
+  hasFilter?: boolean;
   isSelectable?: boolean;
   hasStatus?: boolean;
   defaultStatus?: DragAndDropStatus;

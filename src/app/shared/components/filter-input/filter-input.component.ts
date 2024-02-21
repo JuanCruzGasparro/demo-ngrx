@@ -3,15 +3,13 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
-  Signal,
   SimpleChanges,
-  effect,
-  signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/modules/material.module';
-import { debouncer } from '@shared/utils/debouncer';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-filter-input',
@@ -20,30 +18,31 @@ import { debouncer } from '@shared/utils/debouncer';
   templateUrl: './filter-input.component.html',
   styleUrl: './filter-input.component.scss',
 })
-export class FilterInputComponent implements OnChanges {
+export class FilterInputComponent implements OnInit, OnChanges {
+  @Input() public value = '';
+  @Input() public debounce = 0;
   @Input() public label = 'Filter';
-  @Input() public value!: string;
+  @Input() public icon = 'search';
 
-  @Output() public changer = new EventEmitter<string>();
+  @Output() public filter = new EventEmitter<string>();
 
-  readonly filter = signal<string>('');
+  readonly searchTerm = new Subject<string>();
 
-  constructor() {
-    effect(() => {
-      console.log('filter', this.filter());
-    });
+  constructor() {}
+
+  ngOnInit(): void {
+    this.searchTerm
+      .pipe(distinctUntilChanged(), debounceTime(this.debounce))
+      .subscribe((term: string) => this.filter.emit(term));
   }
 
   ngOnChanges({ value }: SimpleChanges): void {
-    // if (value?.currentValue) this.filter.set(value.currentValue);
+    if (value?.currentValue) this.searchTerm.next(value.currentValue);
   }
 
   changeHandler(event: KeyboardEvent): void {
     const value = (event.target as HTMLInputElement).value;
-    this.filter.set(value);
-    // debouncer(() => {
-    //   this.changer.emit(value);
-    // }, 350);
+    this.searchTerm.next(value);
     // this.changer.emit(value);
   }
 }

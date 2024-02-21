@@ -1,11 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DragAndDropComponent } from '@shared/components/drag-and-drop/drag-and-drop.component';
-import {
-  DragAndDropConfig,
-  DragAndDropStatus,
-} from '@shared/components/drag-and-drop/types/drag-and-drop-config.interface';
-import { DragAndDropItem } from '@shared/components/drag-and-drop/types/drag-and-drop.interface';
+import { DragAndDropItem } from '@shared/components/drag-and-drop/interfaces/drag-and-drop.interface';
 import { buildDragAndDropConfig } from '@shared/components/drag-and-drop/utils/default-config';
 import { MaterialModule } from '@shared/modules/material.module';
 

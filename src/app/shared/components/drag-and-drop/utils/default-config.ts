@@ -2,13 +2,14 @@ import {
   DragAndDropConfig,
   DragAndDropConfigBuilder,
   DragAndDropStatus,
-} from '../types/drag-and-drop-config.interface';
+} from '../interfaces/drag-and-drop-config.interface';
 
 export const DRAG_AND_DROP_CAN_REORDER_DEFAULT = false;
 
 export const DRAG_AND_DROP_DEFAULT_CONFIG: DragAndDropConfig = {
   left: {
     title: 'No asignados',
+    hasFilter: true,
     isSelectable: true,
     hasStatus: false,
     defaultStatus: DragAndDropStatus.Default,
@@ -18,6 +19,7 @@ export const DRAG_AND_DROP_DEFAULT_CONFIG: DragAndDropConfig = {
   },
   right: {
     title: 'Asignados',
+    hasFilter: true,
     isSelectable: true,
     hasStatus: false,
     defaultStatus: DragAndDropStatus.Default,

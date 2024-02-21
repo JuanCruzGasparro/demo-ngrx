@@ -5,7 +5,7 @@ $dad-action-button-size: 24px;
 $dad-panel-width: 940px;
 $dad-panel-border: 1px solid #dbdbdb;
 $dad-panel-border-radius: 5px;
-$dad-panel-background-color: #ffffff;
+$dad-panel-background-color: transparent;
 
 $dad-panel-list-height: 400px;
 $dad-panel-list-item-height: 56px;
@@ -17,9 +17,10 @@ $dad-panel-list-item-status-error: red;
 .cdk-drag-preview {
   border: $dad-panel-border;
   border-radius: $dad-panel-border-radius !important;
-  background-color: $dad-panel-background-color !important;
+  background-color: var(--mdc-elevated-card-container-color) !important;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
     0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  @extend .mat-app-background;
 }
 
 .cdk-drag-placeholder {
@@ -31,9 +32,6 @@ $dad-panel-list-item-status-error: red;
 }
 
 .drag-and-drop {
-  margin-top: $dad-spacer;
-  margin-bottom: $dad-spacer;
-
   // Container
   &__container {
     width: $dad-panel-width;
@@ -48,6 +46,10 @@ $dad-panel-list-item-status-error: red;
   &__panel {
     display: flex;
     flex-direction: column;
+  }
+
+  &__panel-filter {
+    width: 100%;
   }
 
   &__panel-list {
