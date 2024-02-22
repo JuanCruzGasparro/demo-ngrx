@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DragAndDropComponent } from '@shared/components/drag-and-drop/drag-and-drop.component';
 import { DragAndDropItem } from '@shared/components/drag-and-drop/interfaces/drag-and-drop-core.interface';
 import { buildDragAndDropConfig } from '@shared/components/drag-and-drop/utils/default-config';
 import { MaterialModule } from '@shared/modules/material.module';
+import { MovieService } from '@shared/services/movie/movie.service';
 
 @Component({
   selector: 'app-drag-and-drop-index',
@@ -12,7 +13,7 @@ import { MaterialModule } from '@shared/modules/material.module';
   templateUrl: './drag-and-drop-index.component.html',
   styleUrl: './drag-and-drop-index.component.scss',
 })
-export class DragAndDropIndexComponent {
+export class DragAndDropIndexComponent implements OnInit {
   public dragAndDropConfig = buildDragAndDropConfig({
     right: {
       hasActionButton: true,
@@ -21,24 +22,27 @@ export class DragAndDropIndexComponent {
     },
   });
   public assignedItems: DragAndDropItem<number>[] = [];
-  public unassignedItems: DragAndDropItem<number>[] = [
-    { id: 1, description: 'Casa' },
-    { id: 2, description: 'Pueblo' },
-    { id: 3, description: 'Edificio' },
-    { id: 4, description: 'Comisaria' },
-    { id: 5, description: 'Auto' },
-    { id: 6, description: 'Choza' },
-    { id: 7, description: 'Estación de bomberos' },
-    { id: 8, description: 'Mansión' },
-    { id: 9, description: 'Casa futurística' },
-    { id: 10, description: 'Hospital' },
-  ];
+  public unassignedItems: DragAndDropItem<number>[] = [];
+
+  constructor(private _movieService: MovieService) {}
+
+  ngOnInit(): void {
+    this._movieService.get().subscribe({
+      next: (items) => {
+        console.log(items);
+        this.unassignedItems = items;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
 
   public assignedItemsChangeHandler(list: number[]): void {
-    // console.log('assigned', list);
+    console.log('assigned', list);
   }
 
   public unassignedItemsChangeHandler(list: number[]): void {
-    // console.log('unassigned', list);
+    console.log('unassigned', list);
   }
 }

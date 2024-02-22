@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '@shared/modules/material.module';
-import { routes } from '../app.routes';
 import { Router } from '@angular/router';
 
 type IndexLink = {
