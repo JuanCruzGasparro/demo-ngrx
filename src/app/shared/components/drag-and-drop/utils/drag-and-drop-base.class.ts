@@ -9,7 +9,7 @@ import {
   IDragAndDropCore,
 } from '../interfaces/drag-and-drop.interface';
 import { DRAG_AND_DROP_CAN_REORDER_DEFAULT } from './default-config';
-import { DragAndDropFilter } from './drag-and-drop-filter-base.class';
+import _ from 'lodash';
 
 export class DragAndDropCore<T extends DragAndDropIdType>
   implements IDragAndDropCore<T>
@@ -17,35 +17,41 @@ export class DragAndDropCore<T extends DragAndDropIdType>
   unassignedItems: DragAndDropItem<T>[] = [];
   assignedItems: DragAndDropItem<T>[] = [];
 
-  unassignedFilter = new DragAndDropFilter();
-  assignedFilter = new DragAndDropFilter();
+  buildItems(initialList: DragAndDropItem<T>[]): DragAndDropItem<T>[] {
+    return _.map(initialList, (item) => ({ ...item, selected: false }));
+  }
 
   getAssignedIds(): T[] {
-    return this.assignedItems.map((item) => item.id);
+    return _.map(this.assignedItems, ({ id }) => id);
   }
 
   getUnassignedIds(): T[] {
-    return this.unassignedItems.map((item) => item.id);
+    return _.map(this.unassignedItems, ({ id }) => id);
   }
 
-  dragAndDropItemsBuilder(
-    initialList: DragAndDropItem<T>[]
-  ): DragAndDropItem<T>[] {
-    return [...initialList.map((item) => ({ ...item, selected: false }))];
+  getCheckedItems(items: DragAndDropItem<T>[]): DragAndDropItem<T>[] {
+    return _.map(
+      _.filter(items, ({ selected }) => !!selected),
+      (item) => ({ ...item, selected: false })
+    );
   }
 
-  moveCheckedUnassignedItems(): void {
-    const checkedItems = this._getCheckedItems(this.unassignedItems);
-    if (checkedItems.length === 0) return;
-    this.unassignedItems = this._removeCheckedItems(this.unassignedItems);
-    this.assignedItems = [...this.assignedItems, ...checkedItems];
+  moveToAssigned(list: DragAndDropItem<T>[]): void {
+    if (list.length === 0) return;
+    this.unassignedItems = _.filter(
+      this.unassignedItems,
+      ({ id }) => !_.some(list, { id })
+    );
+    this.assignedItems = [...this.assignedItems, ...list];
   }
 
-  moveCheckedAssignedItems(): void {
-    const checkedItems = this._getCheckedItems(this.assignedItems);
-    if (checkedItems.length === 0) return;
-    this.assignedItems = this._removeCheckedItems(this.assignedItems);
-    this.unassignedItems = [...this.unassignedItems, ...checkedItems];
+  moveToUnassigned(list: DragAndDropItem<T>[]): void {
+    if (list.length === 0) return;
+    this.assignedItems = _.filter(
+      this.assignedItems,
+      ({ id }) => !_.some(list, { id })
+    );
+    this.unassignedItems = [...this.unassignedItems, ...list];
   }
 
   onDrop(
@@ -61,18 +67,6 @@ export class DragAndDropCore<T extends DragAndDropIdType>
   }
 
   //#region Private methods
-
-  private _getCheckedItems(items: DragAndDropItem<T>[]): DragAndDropItem<T>[] {
-    return items
-      .filter((item) => item.selected === true)
-      .map((item) => ({ ...item, selected: false }));
-  }
-
-  private _removeCheckedItems(
-    items: DragAndDropItem<T>[]
-  ): DragAndDropItem<T>[] {
-    return items.filter((item) => item.selected === false);
-  }
 
   private _transferArrayItem({
     previousContainer,

@@ -33,10 +33,10 @@ export class DragAndDropComponent extends DragAndDropCore<number> {
   @Input() public id: string = 'drag-and-drop';
   @Input() public config: DragAndDropConfig = buildDragAndDropConfig();
   @Input() public set unassigned(value: DragAndDropItem<number>[]) {
-    this.unassignedItems = this.dragAndDropItemsBuilder(value);
+    this.unassignedItems = this.buildItems(value);
   }
   @Input() public set assigned(value: DragAndDropItem<number>[]) {
-    this.assignedItems = this.dragAndDropItemsBuilder(value);
+    this.assignedItems = this.buildItems(value);
   }
 
   @Output() public assignedItemsChange: EventEmitter<number[]> =
@@ -53,11 +53,15 @@ export class DragAndDropComponent extends DragAndDropCore<number> {
   //#region Actions
 
   public moveToAsssignedHandler(): void {
-    this.moveCheckedUnassignedItems();
+    this.moveToAssigned(this.getCheckedItems(this.unassignedItems));
+    this._emitAssignedItems();
+    this._emitUnassignedItems();
   }
 
   public moveToUnasssignedHandler(): void {
-    this.moveCheckedAssignedItems();
+    this.moveToUnassigned(this.getCheckedItems(this.assignedItems));
+    this._emitAssignedItems();
+    this._emitUnassignedItems();
   }
 
   //#endregion Actions

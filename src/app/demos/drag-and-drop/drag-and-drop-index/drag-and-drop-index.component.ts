@@ -35,10 +35,10 @@ export class DragAndDropIndexComponent {
   ];
 
   public assignedItemsChangeHandler(list: number[]): void {
-    console.log('assigned', list);
+    // console.log('assigned', list);
   }
 
   public unassignedItemsChangeHandler(list: number[]): void {
-    console.log('unassigned', list);
+    // console.log('unassigned', list);
   }
 }

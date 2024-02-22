@@ -108,7 +108,8 @@ $dad-panel-list-item-status-error: red;
   &__actions {
     display: flex;
     align-items: center;
-    height: 100%;
+    height: $dad-panel-list-height;
+    align-self: flex-end;
   }
 
   &__actions-list {

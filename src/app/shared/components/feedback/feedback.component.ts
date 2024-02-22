@@ -11,7 +11,6 @@ import { Feedback } from './utils/feedback.class';
 export class FeedbackComponent {
   @Input({ required: true }) public set feedback(value: Feedback) {
     if (value) {
-      console.log(value);
       this.urlImage = value.getUrlImage();
       this.caption = value.type;
     }

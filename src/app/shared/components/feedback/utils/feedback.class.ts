@@ -33,7 +33,6 @@ export class Feedback {
     );
     if (!feedbackImageFound)
       throw Error(`Image not found at: ${this._feedbackImagesUrl}`);
-    console.log(`${this._feedbackImagesUrl}/${feedbackImageFound.fileName}`);
     return `${this._feedbackImagesUrl}/${feedbackImageFound.fileName}`;
   }
 }
