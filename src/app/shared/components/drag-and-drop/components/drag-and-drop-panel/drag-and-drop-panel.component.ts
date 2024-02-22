@@ -7,7 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { DragAndDropItem } from '../../interfaces/drag-and-drop.interface';
+import { DragAndDropItem } from '../../interfaces/drag-and-drop-core.interface';
 import {
   DragAndDropPanelConfig,
   DragAndDropPanelSide,

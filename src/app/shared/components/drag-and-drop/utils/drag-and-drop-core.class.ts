@@ -7,7 +7,7 @@ import {
   DragAndDropIdType,
   DragAndDropItem,
   IDragAndDropCore,
-} from '../interfaces/drag-and-drop.interface';
+} from '../interfaces/drag-and-drop-core.interface';
 import { DRAG_AND_DROP_CAN_REORDER_DEFAULT } from './default-config';
 import _ from 'lodash';
 
@@ -16,6 +16,8 @@ export class DragAndDropCore<T extends DragAndDropIdType>
 {
   unassignedItems: DragAndDropItem<T>[] = [];
   assignedItems: DragAndDropItem<T>[] = [];
+
+  //#region Core
 
   buildItems(initialList: DragAndDropItem<T>[]): DragAndDropItem<T>[] {
     return _.map(initialList, (item) => ({ ...item, selected: false }));
@@ -65,6 +67,8 @@ export class DragAndDropCore<T extends DragAndDropIdType>
     }
     if (canReorder) this._moveItemInArray(event);
   }
+
+  //#endregion Core
 
   //#region Private methods
 

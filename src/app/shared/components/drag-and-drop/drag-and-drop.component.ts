@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MaterialModule } from '@shared/modules/material.module';
 import { DragAndDropPanelComponent } from './components/drag-and-drop-panel/drag-and-drop-panel.component';
 import { DragAndDropActionsComponent } from './components/drag-and-drop-actions/drag-and-drop-actions.component';
-import { DragAndDropItem } from './interfaces/drag-and-drop.interface';
+import { DragAndDropItem } from './interfaces/drag-and-drop-core.interface';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -11,7 +11,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { DragAndDropConfig } from './interfaces/drag-and-drop-config.interface';
 import { buildDragAndDropConfig } from './utils/default-config';
-import { DragAndDropCore } from './utils/drag-and-drop-base.class';
+import { DragAndDropCore } from './utils/drag-and-drop-core.class';
 
 @Component({
   selector: 'app-drag-and-drop',
@@ -30,8 +30,9 @@ import { DragAndDropCore } from './utils/drag-and-drop-base.class';
 export class DragAndDropComponent extends DragAndDropCore<number> {
   //#region Inputs and Outputs
 
-  @Input() public id: string = 'drag-and-drop';
-  @Input() public config: DragAndDropConfig = buildDragAndDropConfig();
+  @Input({ required: true }) public id!: string;
+  @Input({ required: true }) public config: DragAndDropConfig =
+    buildDragAndDropConfig();
   @Input() public set unassigned(value: DragAndDropItem<number>[]) {
     this.unassignedItems = this.buildItems(value);
   }
