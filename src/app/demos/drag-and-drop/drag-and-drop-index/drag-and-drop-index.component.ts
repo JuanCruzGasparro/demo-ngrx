@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DragAndDropComponent } from '@shared/components/drag-and-drop/drag-and-drop.component';
-import { DragAndDropItem } from '@shared/components/drag-and-drop/interfaces/drag-and-drop-core.interface';
 import { buildDragAndDropConfig } from '@shared/components/drag-and-drop/utils/default-config';
 import { MaterialModule } from '@shared/modules/material.module';
 import { MovieService } from '@shared/services/movie/movie.service';
+import { delay, of } from 'rxjs';
 
 @Component({
   selector: 'app-drag-and-drop-index',
@@ -13,30 +13,17 @@ import { MovieService } from '@shared/services/movie/movie.service';
   templateUrl: './drag-and-drop-index.component.html',
   styleUrl: './drag-and-drop-index.component.scss',
 })
-export class DragAndDropIndexComponent implements OnInit {
-  public dragAndDropConfig = buildDragAndDropConfig({
+export class DragAndDropIndexComponent {
+  dragAndDropConfig = buildDragAndDropConfig({
     right: {
       hasActionButton: true,
       hasStatus: true,
       canReorder: true,
     },
   });
-  public assignedItems: DragAndDropItem<number>[] = [];
-  public unassignedItems: DragAndDropItem<number>[] = [];
+  dragAndDropValues$ = of<number[]>([1, 3, 5, 8]).pipe(delay(1500));
 
-  constructor(private _movieService: MovieService) {}
-
-  ngOnInit(): void {
-    this._movieService.get().subscribe({
-      next: (items) => {
-        console.log(items);
-        this.unassignedItems = items;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
+  constructor(public movieService: MovieService) {}
 
   public assignedItemsChangeHandler(list: number[]): void {
     console.log('assigned', list);

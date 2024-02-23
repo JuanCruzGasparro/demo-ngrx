@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { MaterialModule } from '@shared/modules/material.module';
 import { DragAndDropPanelComponent } from './components/drag-and-drop-panel/drag-and-drop-panel.component';
 import { DragAndDropActionsComponent } from './components/drag-and-drop-actions/drag-and-drop-actions.component';
@@ -12,6 +20,8 @@ import {
 import { DragAndDropConfig } from './interfaces/drag-and-drop-config.interface';
 import { buildDragAndDropConfig } from './utils/default-config';
 import { DragAndDropCore } from './utils/drag-and-drop-core.class';
+import { ICollectionService } from '@shared/interfaces/collection-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-drag-and-drop',
@@ -27,29 +37,44 @@ import { DragAndDropCore } from './utils/drag-and-drop-core.class';
   templateUrl: './drag-and-drop.component.html',
   styleUrl: './drag-and-drop.component.scss',
 })
-export class DragAndDropComponent extends DragAndDropCore<number> {
+export class DragAndDropComponent
+  extends DragAndDropCore<number>
+  implements OnChanges, OnDestroy
+{
   //#region Inputs and Outputs
 
   @Input({ required: true }) public id!: string;
   @Input({ required: true }) public config: DragAndDropConfig =
     buildDragAndDropConfig();
-  @Input() public set unassigned(value: DragAndDropItem<number>[]) {
-    this.unassignedItems = this.buildItems(value);
-  }
-  @Input() public set assigned(value: DragAndDropItem<number>[]) {
-    this.assignedItems = this.buildItems(value);
-  }
+  @Input({ required: true }) public service!: ICollectionService<
+    DragAndDropItem<number>
+  >;
+  @Input({ required: true }) public values: number[] = [];
 
   @Output() public assignedItemsChange: EventEmitter<number[]> =
     new EventEmitter();
   @Output() public unassignedItemsChange: EventEmitter<number[]> =
     new EventEmitter();
-  // @Output() public unassignedFilterChange: EventEmitter<string> =
-  //   new EventEmitter<string>();
-  // @Output() public assignedFilterChange: EventEmitter<string> =
-  //   new EventEmitter<string>();
 
   //#endregion Inputs and Outputs
+
+  dataService!: ICollectionService<DragAndDropItem<number>>;
+
+  private _subscription = new Subscription();
+
+  ngOnChanges({ service, values }: SimpleChanges): void {
+    if (service?.currentValue) {
+      this.dataService = service.currentValue;
+      this._getInitialData();
+    }
+    if (values?.currentValue) {
+      this._patchValues(values.currentValue);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
+  }
 
   //#region Actions
 
@@ -92,18 +117,6 @@ export class DragAndDropComponent extends DragAndDropCore<number> {
 
   //#endregion Panel
 
-  //#region Filter
-
-  // public onUnassignedFilterChange(term: string): void {
-  // this.unassignedFilterChange.emit(term);
-  // }
-
-  // public onAssignedFilterChange(term: string): void {
-  // this.assignedFilterChange.emit(term);
-  // }
-
-  //#endregion Filter
-
   //#region Private methods
 
   private _emitAssignedItems(): void {
@@ -112,6 +125,25 @@ export class DragAndDropComponent extends DragAndDropCore<number> {
 
   private _emitUnassignedItems(): void {
     this.unassignedItemsChange.emit(this.getUnassignedIds());
+  }
+
+  private _getInitialData(): void {
+    this._subscription.add(
+      this.getInitialData().subscribe({
+        next: (list) => {
+          this.unassignedItems = list;
+          this._patchValues(this.values);
+        },
+        error: (error) => {
+          throw error;
+        },
+      })
+    );
+  }
+
+  private _patchValues(values: number[]): void {
+    if (this.values.length !== 0)
+      this.moveToAssigned(this.mapIdsToItems(values));
   }
 
   //#endregion Private methods

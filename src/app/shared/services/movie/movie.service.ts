@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ICollectionService } from '@shared/interfaces/collection-service';
 import { Movie } from '@shared/models/movie.model';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import { HttpClient } from '@angular/common/http';
+import { DragAndDropItem } from '@shared/components/drag-and-drop/interfaces/drag-and-drop-core.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MovieService implements ICollectionService<Movie> {
+export class MovieService
+  implements ICollectionService<DragAndDropItem<number>>
+{
   private readonly _url = `${this._configService.apiUrl}/movies`;
 
   constructor(
@@ -17,11 +20,19 @@ export class MovieService implements ICollectionService<Movie> {
   ) {}
 
   get(): Observable<Movie[]> {
-    return this._http.get<Movie[]>(this._url);
+    return this._http
+      .get<Movie[]>(this._url)
+      .pipe(
+        map((list) =>
+          list.map(({ id, ...entity }) => ({ id: Number(id), ...entity }))
+        )
+      );
   }
 
   getById(entityId: string | number): Observable<Movie> {
-    return this._http.get<Movie>(`${this._url}/${entityId}`);
+    return this._http
+      .get<Movie>(`${this._url}/${entityId}`)
+      .pipe(map(({ id, ...entity }) => ({ id: Number(id), ...entity })));
   }
 
   post(entity: Movie): Observable<void> {

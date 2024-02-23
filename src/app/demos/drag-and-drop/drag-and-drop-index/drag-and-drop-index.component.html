@@ -7,8 +7,8 @@
       <app-drag-and-drop
         id="movies"
         [config]="dragAndDropConfig"
-        [unassigned]="unassignedItems"
-        [assigned]="assignedItems"
+        [service]="movieService"
+        [values]="(dragAndDropValues$ | async) ?? []"
         (assignedItemsChange)="assignedItemsChangeHandler($event)"
         (unassignedItemsChange)="unassignedItemsChangeHandler($event)"
       ></app-drag-and-drop>

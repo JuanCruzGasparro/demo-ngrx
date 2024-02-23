@@ -1,4 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { ICollectionService } from '@shared/interfaces/collection-service';
+import { Observable } from 'rxjs';
 
 export type DragAndDropIdType = string | number;
 
@@ -14,6 +16,8 @@ export interface IDragAndDropCore<T extends DragAndDropIdType> {
   unassignedItems: DragAndDropItem<T>[];
   assignedItems: DragAndDropItem<T>[];
 
+  dataService: ICollectionService<DragAndDropItem<T>>;
+
   buildItems: (list: DragAndDropItem<T>[]) => DragAndDropItem<T>[];
 
   getAssignedIds: () => T[];
@@ -27,4 +31,8 @@ export interface IDragAndDropCore<T extends DragAndDropIdType> {
     event: CdkDragDrop<DragAndDropItem<T>[]>,
     canReorder?: boolean
   ) => void;
+
+  // Feeder
+  getInitialData(): Observable<DragAndDropItem<T>[]>;
+  mapIdsToItems(ids: T[]): DragAndDropItem<T>[];
 }

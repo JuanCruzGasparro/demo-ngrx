@@ -10,12 +10,27 @@ import {
 } from '../interfaces/drag-and-drop-core.interface';
 import { DRAG_AND_DROP_CAN_REORDER_DEFAULT } from './default-config';
 import _ from 'lodash';
+import { ICollectionService } from '@shared/interfaces/collection-service';
+import { Observable, map } from 'rxjs';
 
-export class DragAndDropCore<T extends DragAndDropIdType>
+export abstract class DragAndDropCore<T extends DragAndDropIdType>
   implements IDragAndDropCore<T>
 {
-  unassignedItems: DragAndDropItem<T>[] = [];
-  assignedItems: DragAndDropItem<T>[] = [];
+  private _unassignedItems: DragAndDropItem<T>[] = [];
+  get unassignedItems(): DragAndDropItem<T>[] {
+    return this._unassignedItems;
+  }
+  set unassignedItems(value: DragAndDropItem<T>[]) {
+    this._unassignedItems = value;
+  }
+  private _assignedItems: DragAndDropItem<T>[] = [];
+  get assignedItems(): DragAndDropItem<T>[] {
+    return this._assignedItems;
+  }
+  set assignedItems(value: DragAndDropItem<T>[]) {
+    this._assignedItems = value;
+  }
+  abstract dataService: ICollectionService<DragAndDropItem<T>>;
 
   //#region Core
 
@@ -66,6 +81,22 @@ export class DragAndDropCore<T extends DragAndDropIdType>
       return;
     }
     if (canReorder) this._moveItemInArray(event);
+  }
+
+  getInitialData(): Observable<DragAndDropItem<T>[]> {
+    return this.dataService.get().pipe(map((list) => this.buildItems(list)));
+  }
+
+  mapIdsToItems(ids: T[]): DragAndDropItem<T>[] {
+    return _.reduce(
+      ids,
+      (collection, id) => {
+        const item = this.unassignedItems.find((item) => item.id === id);
+        if (item) collection.push(item);
+        return collection;
+      },
+      [] as DragAndDropItem<T>[]
+    );
   }
 
   //#endregion Core
