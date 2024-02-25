@@ -6,6 +6,7 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
+  signal,
 } from '@angular/core';
 import { MaterialModule } from '@shared/modules/material.module';
 import { DragAndDropPanelComponent } from './components/drag-and-drop-panel/drag-and-drop-panel.component';
@@ -59,6 +60,9 @@ export class DragAndDropComponent
   //#endregion Inputs and Outputs
 
   dataService!: ICollectionService<DragAndDropItem<number>>;
+
+  isUnassignedLoading = signal(false);
+  isAssignedLoading = signal(false);
 
   private _subscription = new Subscription();
 

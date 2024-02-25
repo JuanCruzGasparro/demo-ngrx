@@ -5,6 +5,7 @@
       side="left"
       [config]="config.left"
       [items]="unassignedItems"
+      [isLoading]="isUnassignedLoading"
       (update)="onUnassignedPanelDropHandler($event)"
     ></app-drag-and-drop-panel>
 

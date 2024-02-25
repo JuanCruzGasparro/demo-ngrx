@@ -5,6 +5,8 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
+  Signal,
+  signal,
 } from '@angular/core';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { DragAndDropItem } from '../../interfaces/drag-and-drop-core.interface';
@@ -22,6 +24,7 @@ import {
   FeedbackSize,
   FeedbackType,
 } from '@shared/components/feedback/utils/feedback.enum';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-drag-and-drop-panel',
@@ -29,6 +32,7 @@ import {
   imports: [
     CommonModule,
     MaterialModule,
+    NgxSkeletonLoaderModule,
     CdkDropList,
     CdkDrag,
     FilterInputComponent,
@@ -41,6 +45,7 @@ export class DragAndDropPanelComponent implements OnChanges {
   @Input() public side!: DragAndDropPanelSide;
   @Input() public config!: DragAndDropPanelConfig;
   @Input() public items: DragAndDropItem<number>[] = [];
+  @Input() public isLoading: Signal<boolean> = signal(true);
 
   @Output() public update = new EventEmitter<
     CdkDragDrop<DragAndDropItem<number>[]>

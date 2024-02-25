@@ -28,6 +28,7 @@
     "@ngrx/store-devtools": "^17.0.1",
     "json-server": "^1.0.0-alpha.19",
     "lodash": "^4.17.21",
+    "ngx-skeleton-loader": "^9.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

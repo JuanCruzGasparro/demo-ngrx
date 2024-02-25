@@ -1,3 +1,5 @@
+$drag-and-drop-class: "drag-and-drop";
+
 $dad-spacer: 18px;
 $dad-gap: 10px;
 $dad-action-button-size: 24px;
@@ -31,7 +33,7 @@ $dad-panel-list-item-status-error: red;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.drag-and-drop {
+.#{$drag-and-drop-class} {
   // Container
   &__container {
     width: $dad-panel-width;
@@ -78,6 +80,13 @@ $dad-panel-list-item-status-error: red;
     padding-right: $dad-spacer;
     border-bottom: $dad-panel-border;
     background-color: $dad-panel-background-color;
+
+    &--skeleton {
+      .skeleton-loader {
+        height: $dad-panel-list-item-height;
+        margin-bottom: 0 !important;
+      }
+    }
   }
 
   &__item-label {
