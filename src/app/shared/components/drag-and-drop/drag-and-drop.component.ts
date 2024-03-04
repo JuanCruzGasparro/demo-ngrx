@@ -132,6 +132,7 @@ export class DragAndDropComponent
   }
 
   private _getInitialData(): void {
+    this.isUnassignedLoading.set(true);
     this._subscription.add(
       this.getInitialData().subscribe({
         next: (list) => {
@@ -140,6 +141,9 @@ export class DragAndDropComponent
         },
         error: (error) => {
           throw error;
+        },
+        complete: () => {
+          this.isUnassignedLoading.set(false);
         },
       })
     );

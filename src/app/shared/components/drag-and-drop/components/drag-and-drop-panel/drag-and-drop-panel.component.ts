@@ -25,6 +25,7 @@ import {
   FeedbackType,
 } from '@shared/components/feedback/utils/feedback.enum';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { getEmptyList } from '../../utils/drag-and-drop.utils';
 
 @Component({
   selector: 'app-drag-and-drop-panel',
@@ -32,11 +33,11 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
   imports: [
     CommonModule,
     MaterialModule,
-    NgxSkeletonLoaderModule,
     CdkDropList,
     CdkDrag,
     FilterInputComponent,
     FeedbackComponent,
+    NgxSkeletonLoaderModule,
   ],
   templateUrl: './drag-and-drop-panel.component.html',
   styleUrl: './drag-and-drop-panel.component.scss',
@@ -69,17 +70,25 @@ export class DragAndDropPanelComponent implements OnChanges {
     }
   }
 
-  public get statusClass(): string {
+  get statusClass(): string {
     return this.config.defaultStatus ?? DragAndDropStatus.Default;
   }
 
-  public filterChange(term: string): void {
+  get emptyList(): void[] {
+    return getEmptyList(10);
+  }
+
+  public filterChangeHandler(term: string): void {
     this.filteredItems =
       term.length >= 3 ? this._getFilteredItemsByTerm(term) : this.items;
   }
 
-  public onDrop(event: CdkDragDrop<DragAndDropItem<number>[]>): void {
+  public dropHandler(event: CdkDragDrop<DragAndDropItem<number>[]>): void {
     this.update.emit(event);
+  }
+
+  public doubleClickHandler(event: Event): void {
+    console.log(event);
   }
 
   private _getFilteredItemsByTerm(term: string): DragAndDropItem<number>[] {

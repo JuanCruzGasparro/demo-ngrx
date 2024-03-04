@@ -3,18 +3,24 @@
   <app-filter-input
     class="drag-and-drop-panel-filter"
     [debounce]="filterDebounceTime"
-    (filter)="filterChange($event)"
+    (filter)="filterChangeHandler($event)"
   ></app-filter-input>
+  @if (isLoading()) {
   <div
     [id]="'drag-and-drop-panel-' + side"
     class="drag-and-drop__panel-list"
     role="list"
     cdkDropList
     [cdkDropListData]="items"
-    (cdkDropListDropped)="onDrop($event)"
+    (cdkDropListDropped)="dropHandler($event)"
   >
     @for (item of filteredItems; track $index) {
-    <div role="listitem" cdkDrag class="drag-and-drop__panel-list-item">
+    <div
+      role="listitem"
+      cdkDrag
+      class="drag-and-drop__panel-list-item"
+      (dblclick)="doubleClickHandler($event)"
+    >
       <mat-icon>{{ dragIndicatorIcon }}</mat-icon>
       <mat-checkbox
         *ngIf="config.isSelectable"
@@ -35,4 +41,13 @@
     </div>
     }
   </div>
+  } @else {
+  <div class="drag-and-drop__panel-list">
+    @for (item of emptyList; track $index) {
+    <ngx-skeleton-loader
+      class="drag-and-drop__panel-list-item drag-and-drop__panel-list-item--skeleton"
+    ></ngx-skeleton-loader>
+    }
+  </div>
+  }
 </div>
