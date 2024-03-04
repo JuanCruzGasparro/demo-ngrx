@@ -4,8 +4,9 @@
 
 **TODO:**
 
-- Online filters for a panel
-- Loader skeleton for loading state
+- Online filters for a panel.
+- Loader skeleton for loading state.
+- Rework skeleton panel list.
 
 **DONE:**
 

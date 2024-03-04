@@ -5,7 +5,7 @@
     [debounce]="filterDebounceTime"
     (filter)="filterChangeHandler($event)"
   ></app-filter-input>
-  @if (isLoading()) {
+  @if (!isLoading) {
   <div
     [id]="'drag-and-drop-panel-' + side"
     class="drag-and-drop__panel-list"

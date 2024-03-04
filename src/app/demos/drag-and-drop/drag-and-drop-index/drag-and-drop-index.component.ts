@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { DragAndDropComponent } from '@shared/components/drag-and-drop/drag-and-drop.component';
 import { buildDragAndDropConfig } from '@shared/components/drag-and-drop/utils/default-config';
 import { MaterialModule } from '@shared/modules/material.module';
+import { ConfigService } from '@shared/services/config/config.service';
 import { MovieService } from '@shared/services/movie/movie.service';
-import { delay, of } from 'rxjs';
+import { BehaviorSubject, delay, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-drag-and-drop-index',
@@ -13,17 +15,39 @@ import { delay, of } from 'rxjs';
   templateUrl: './drag-and-drop-index.component.html',
   styleUrl: './drag-and-drop-index.component.scss',
 })
-export class DragAndDropIndexComponent {
-  dragAndDropConfig = buildDragAndDropConfig({
-    right: {
-      hasActionButton: true,
-      hasStatus: true,
-      canReorder: true,
-    },
-  });
-  dragAndDropValues$ = of<number[]>([1, 3, 5, 8]).pipe(delay(1500));
+export class DragAndDropIndexComponent implements OnInit {
+  dragAndDropConfig = buildDragAndDropConfig();
+  dragAndDropValues: number[] = [];
+  isLoading$ = new BehaviorSubject<boolean>(true);
 
-  constructor(public movieService: MovieService) {}
+  constructor(
+    private _hhtp: HttpClient,
+    private _config: ConfigService,
+    public movieService: MovieService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadDataClickHandler();
+  }
+
+  public loadDataClickHandler(): void {
+    this._hhtp
+      .get<{ list: number[] }>(`${this._config.apiUrl}/moviesData`)
+      .pipe(
+        delay(2500),
+        finalize(() => this.isLoading$.next(false))
+      )
+      .subscribe({
+        next: ({ list }) => {
+          this.dragAndDropValues = list;
+          // this.isLoading$.next(false);
+        },
+        error: (error) => {
+          // this.isLoading$.next(false);
+          throw error;
+        },
+      });
+  }
 
   public assignedItemsChangeHandler(list: number[]): void {
     console.log('assigned', list);

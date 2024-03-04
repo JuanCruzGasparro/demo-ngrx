@@ -82,6 +82,7 @@ $dad-panel-list-item-status-error: red;
     background-color: $dad-panel-background-color;
 
     &--skeleton {
+      cursor: wait;
       .skeleton-loader {
         height: $dad-panel-list-item-height;
         margin-bottom: 0 !important;

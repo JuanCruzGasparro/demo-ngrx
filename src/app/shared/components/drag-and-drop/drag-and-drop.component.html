@@ -5,7 +5,7 @@
       side="left"
       [config]="config.left"
       [items]="unassignedItems"
-      [isLoading]="isUnassignedLoading"
+      [isLoading]="(isUnassignedLoading$ | async)!"
       (update)="onUnassignedPanelDropHandler($event)"
     ></app-drag-and-drop-panel>
 
@@ -19,6 +19,7 @@
       side="right"
       [config]="config.right"
       [items]="assignedItems"
+      [isLoading]="(isAssignedLoading$ | async)!"
       (update)="onAssignedPanelDropHandler($event)"
     ></app-drag-and-drop-panel>
   </div>

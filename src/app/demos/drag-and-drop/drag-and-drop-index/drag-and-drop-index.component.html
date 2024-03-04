@@ -4,11 +4,19 @@
       <mat-card-title>Drag & Drop</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="loadDataClickHandler()"
+      >
+        Load data
+      </button>
       <app-drag-and-drop
         id="movies"
+        [isLoading]="(isLoading$ | async)!"
         [config]="dragAndDropConfig"
         [service]="movieService"
-        [values]="(dragAndDropValues$ | async) ?? []"
+        [values]="dragAndDropValues"
         (assignedItemsChange)="assignedItemsChangeHandler($event)"
         (unassignedItemsChange)="unassignedItemsChangeHandler($event)"
       ></app-drag-and-drop>

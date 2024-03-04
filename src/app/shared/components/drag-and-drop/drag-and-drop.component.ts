@@ -6,7 +6,6 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
-  signal,
 } from '@angular/core';
 import { MaterialModule } from '@shared/modules/material.module';
 import { DragAndDropPanelComponent } from './components/drag-and-drop-panel/drag-and-drop-panel.component';
@@ -22,12 +21,14 @@ import { DragAndDropConfig } from './interfaces/drag-and-drop-config.interface';
 import { buildDragAndDropConfig } from './utils/default-config';
 import { DragAndDropCore } from './utils/drag-and-drop-core.class';
 import { ICollectionService } from '@shared/interfaces/collection-service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-drag-and-drop',
   standalone: true,
   imports: [
+    CommonModule,
     MaterialModule,
     DragAndDropPanelComponent,
     DragAndDropActionsComponent,
@@ -51,6 +52,7 @@ export class DragAndDropComponent
     DragAndDropItem<number>
   >;
   @Input({ required: true }) public values: number[] = [];
+  @Input({ required: true }) public isLoading: boolean = true;
 
   @Output() public assignedItemsChange: EventEmitter<number[]> =
     new EventEmitter();
@@ -61,18 +63,22 @@ export class DragAndDropComponent
 
   dataService!: ICollectionService<DragAndDropItem<number>>;
 
-  isUnassignedLoading = signal(false);
-  isAssignedLoading = signal(false);
+  isUnassignedLoading$ = new BehaviorSubject(true);
+  isAssignedLoading$ = new BehaviorSubject(true);
 
   private _subscription = new Subscription();
 
-  ngOnChanges({ service, values }: SimpleChanges): void {
+  ngOnChanges({ service, values, isLoading }: SimpleChanges): void {
     if (service?.currentValue) {
       this.dataService = service.currentValue;
       this._getInitialData();
     }
     if (values?.currentValue) {
       this._patchValues(values.currentValue);
+    }
+    if (typeof isLoading?.currentValue === 'boolean') {
+      console.log(isLoading?.currentValue);
+      this.isAssignedLoading$.next(isLoading.currentValue);
     }
   }
 
@@ -132,7 +138,7 @@ export class DragAndDropComponent
   }
 
   private _getInitialData(): void {
-    this.isUnassignedLoading.set(true);
+    this.isUnassignedLoading$.next(true);
     this._subscription.add(
       this.getInitialData().subscribe({
         next: (list) => {
@@ -143,7 +149,7 @@ export class DragAndDropComponent
           throw error;
         },
         complete: () => {
-          this.isUnassignedLoading.set(false);
+          this.isUnassignedLoading$.next(false);
         },
       })
     );

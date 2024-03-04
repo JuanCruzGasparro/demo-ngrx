@@ -5,8 +5,6 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
-  Signal,
-  signal,
 } from '@angular/core';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { DragAndDropItem } from '../../interfaces/drag-and-drop-core.interface';
@@ -46,7 +44,7 @@ export class DragAndDropPanelComponent implements OnChanges {
   @Input() public side!: DragAndDropPanelSide;
   @Input() public config!: DragAndDropPanelConfig;
   @Input() public items: DragAndDropItem<number>[] = [];
-  @Input() public isLoading: Signal<boolean> = signal(true);
+  @Input() public isLoading = true;
 
   @Output() public update = new EventEmitter<
     CdkDragDrop<DragAndDropItem<number>[]>
@@ -75,7 +73,7 @@ export class DragAndDropPanelComponent implements OnChanges {
   }
 
   get emptyList(): void[] {
-    return getEmptyList(10);
+    return getEmptyList(7);
   }
 
   public filterChangeHandler(term: string): void {
