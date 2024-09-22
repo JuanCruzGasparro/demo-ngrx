@@ -4,6 +4,8 @@
 
 **TODO:**
 
+- Test
+
 - Online filters for a panel.
 - Loader skeleton for loading state.
 - Rework skeleton panel list.
